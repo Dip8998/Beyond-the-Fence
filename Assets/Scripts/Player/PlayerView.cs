@@ -5,16 +5,16 @@ namespace BTF.Player
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Animator))]
     public sealed class PlayerView : MonoBehaviour
-	{
-		private PlayerController controller;
-		private Rigidbody2D rb;
+    {
+        private PlayerController controller;
+        private Rigidbody2D rb;
         private Animator animator;
 
         private Vector2 lastMoveDir = Vector2.down;
 
+        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
         private static readonly int MoveX = Animator.StringToHash("MoveX");
         private static readonly int MoveY = Animator.StringToHash("MoveY");
-        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
         private void Awake()
         {
@@ -23,9 +23,13 @@ namespace BTF.Player
 
             rb.gravityScale = 0f;
             rb.freezeRotation = true;
+            rb.interpolation = RigidbodyInterpolation2D.Interpolate;
         }
 
-        public void Bind(PlayerController controller) => this.controller = controller;
+        public void Bind(PlayerController controller)
+        {
+            this.controller = controller;
+        }
 
         private void Update()
         {
@@ -35,19 +39,25 @@ namespace BTF.Player
 
         private void FixedUpdate()
         {
+            if (controller == null) return;
             rb.linearVelocity = controller.GetVelocity();
         }
 
         private void UpdateAnimation()
         {
             Vector2 velocity = controller.GetVelocity();
-            bool isMoving = velocity.sqrMagnitude > 0.01f;
+            bool isMoving = velocity.sqrMagnitude > 0.001f;
 
             animator.SetBool(IsMoving, isMoving);
 
             if (isMoving)
             {
-                lastMoveDir = velocity.normalized;
+                Vector2 dir = velocity.normalized;
+
+                if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+                    lastMoveDir = new Vector2(Mathf.Sign(dir.x), 0);
+                else
+                    lastMoveDir = new Vector2(0, Mathf.Sign(dir.y));
             }
 
             animator.SetFloat(MoveX, lastMoveDir.x);

@@ -4,20 +4,30 @@ namespace BTF.Camera
 {
     public sealed class CameraFollow2D : MonoBehaviour
     {
-        [Header("Follow Settings")]
+        [SerializeField] private Vector3 offset = new(0, 0, -10);
         [SerializeField] private float smoothTime = 0.15f;
-        [SerializeField] private Vector3 offset;
 
-        private Vector3 velocity;
         private Transform target;
+        private Rigidbody2D targetRb;
+        private Vector3 velocity;
+
+        public void SetTarget(Transform target)
+        {
+            this.target = target;
+
+            if (target.TryGetComponent(out Rigidbody2D rb))
+                targetRb = rb;
+        }
 
         private void LateUpdate()
         {
-            if (target == null)
-                return;
+            if (target == null) return;
 
-            Vector3 targetPos = target.position + offset;
-            targetPos.z = transform.position.z;
+            Vector3 targetPos =
+                (targetRb != null
+                    ? (Vector3)targetRb.position
+                    : target.position)
+                + offset;
 
             transform.position = Vector3.SmoothDamp(
                 transform.position,
@@ -25,11 +35,6 @@ namespace BTF.Camera
                 ref velocity,
                 smoothTime
             );
-        }
-
-        public void SetTarget(Transform newTarget)
-        {
-            target = newTarget;
         }
     }
 }

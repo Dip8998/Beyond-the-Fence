@@ -44,8 +44,7 @@ GameObject:
   - component: {fileID: 8144436250748530309}
   - component: {fileID: 3015271694658869885}
   - component: {fileID: 4150395511934686140}
-  - component: {fileID: 2746452496225632410}
-  - component: {fileID: 4179822503543454094}
+  - component: {fileID: 2031532862696755820}
   m_Layer: 0
   m_Name: HouseBase
   m_TagString: Untagged
@@ -161,7 +160,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8, y: 3.5}
+    oldSize: {x: 8, y: 2.9375}
     newSize: {x: 5, y: 6.5625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -169,7 +168,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 7.1871204, y: 2.5925941}
   m_EdgeRadius: 0
---- !u!114 &2746452496225632410
+--- !u!114 &2031532862696755820
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,23 +177,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5666520361782254115}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5763418636a5b634fb1720c180a59766, type: 3}
+  m_Script: {fileID: 11500000, guid: d45d394c676ffae498d7e24d2e23213f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sortingOffset: 0
---- !u!114 &4179822503543454094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5666520361782254115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5763418636a5b634fb1720c180a59766, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sortingOffset: 100
 --- !u!1 &9222221761887676545
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2196856239065140871}
   - component: {fileID: 447930901417242345}
-  - component: {fileID: 6975013816220369292}
+  - component: {fileID: 2457367182699070119}
   m_Layer: 0
   m_Name: HouseRoof
   m_TagString: Untagged
@@ -283,7 +269,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6975013816220369292
+--- !u!114 &2457367182699070119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,7 +278,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9222221761887676545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5763418636a5b634fb1720c180a59766, type: 3}
+  m_Script: {fileID: 11500000, guid: d45d394c676ffae498d7e24d2e23213f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sortingOffset: 1000

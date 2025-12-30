@@ -1,8 +1,8 @@
-﻿namespace BTF.Core.StateMachine
+﻿namespace BTF.Interfaces
 {
     public interface IState<T>
     {
-        void SetOwner(T Owner);
+        void SetOwner(T owner);
         void OnStateEnter();
         void Update();
         void OnStateExit();

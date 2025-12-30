@@ -1,34 +1,29 @@
-using UnityEngine;
-using BTF.Core.Services;
+﻿using BTF.Camera;
+using BTF.Input;
 using BTF.Player;
-using BTF.Camera;
+using UnityEngine;
 
-namespace Game
+namespace BTF.Game
 {
-    public sealed class GameBootstrap : MonoBehaviour
+    public class GameBootstrap : MonoBehaviour
     {
-        [Header("Scene References")]
         [SerializeField] private PlayerView playerView;
+        [SerializeField] private InputProvider inputProvider;
         [SerializeField] private CameraFollow2D cameraFollow;
-
-        private InputService inputService;
 
         private void Awake()
         {
-            inputService = new InputService();
-            inputService.Enable();
+            Debug.Assert(playerView != null);
+            Debug.Assert(inputProvider != null);
+            Debug.Assert(cameraFollow != null);
 
-            var playerModel = new PlayerModel();
+            var playerModel = new PlayerModel(100, 5f);
+            var inputService = new InputService();
+            inputProvider.Bind(inputService);
+
             var playerController = new PlayerController(playerModel, inputService);
-
             playerView.Bind(playerController);
-
             cameraFollow.SetTarget(playerView.transform);
-        }
-
-        private void OnDisable()
-        {
-            inputService.Disable();
         }
     }
 }

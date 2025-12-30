@@ -1,5 +1,5 @@
-﻿using BTF.Core.Services;
-using BTF.Player.StateMachine;
+﻿using BTF.Input;
+using BTF.Player.PSM;
 using UnityEngine;
 
 namespace BTF.Player
@@ -8,41 +8,41 @@ namespace BTF.Player
     {
         private readonly PlayerModel model;
         private readonly PlayerStateMachine stateMachine;
-        private readonly InputService input;
-
-        public PlayerController(PlayerModel model, InputService input)
+        private InputService inputService;
+        
+        public PlayerController(PlayerModel model, InputService inputService)
         {
             this.model = model;
-            this.input = input;
-
-            stateMachine = new PlayerStateMachine(this, input);
+            this.inputService = inputService;
+            stateMachine = new PlayerStateMachine(this);
         }
 
-        public void Tick() => stateMachine.Update();
-
-        public void SetVelocity(Vector2 velocity)
+        public void Tick()
         {
-            model.Velocity = velocity;
+            stateMachine.Update();
         }
 
-        public void ChangeState(PlayerStates newState) => stateMachine?.ChangeStates(newState);
+        public void ChangeState(PlayerStates newState) => stateMachine?.ChangeState(newState);
+
+        public void Move(Vector2 dir)
+        {
+            if(dir.sqrMagnitude < 0.001f)
+            {
+                model.Velocity = Vector2.zero;
+                return;
+            }
+
+            model.Velocity = dir.normalized * model.MoveSpeed;
+        }
+
+        public void TakeDamage(int damage) { } 
+
+        public void Heal(int amount) { }
 
         public Vector2 GetVelocity() => model.Velocity;
-        public float GetSpeed() => model.MoveSpeed;
 
-        public bool HasMovementInput()
-        {
-            return input.MoveInput.sqrMagnitude > 0.01f;
-        }
+        public Vector2 GetMoveInput() => inputService.GetMoveInput();
 
-        public Vector2 GetMoveDirection()
-        {
-            return input.MoveInput.normalized;
-        }
-
-        public Vector2 GetRawMoveInput()
-        {
-            return input.MoveInput;
-        }
+        public bool HasMoveInput() => inputService.GetMoveInput().sqrMagnitude > 0.001f;
     }
 }

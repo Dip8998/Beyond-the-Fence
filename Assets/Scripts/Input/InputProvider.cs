@@ -1,0 +1,43 @@
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
+
+namespace BTF.Input
+{
+    public sealed class InputProvider : MonoBehaviour
+    {
+        private PlayerInputActions actions;
+        private InputService inputService;
+
+        public void Bind(InputService inputService) => this.inputService = inputService;
+
+        private void Awake()
+        {
+            actions = new PlayerInputActions();
+        }
+
+        private void OnEnable()
+        {
+            actions.Player.Move.performed += OnMovePerformed;
+            actions.Player.Move.canceled += OnMoveCanceled;
+            actions.Enable();
+        }
+
+        private void OnDisable()
+        {
+            actions.Player.Move.performed -= OnMovePerformed;
+            actions.Player.Move.canceled -= OnMoveCanceled;
+            actions.Disable();
+        }
+
+        private void OnMovePerformed(InputAction.CallbackContext ctx)
+        {
+            inputService.SetMoveInput(ctx.ReadValue<Vector2>());
+        }
+
+        private void OnMoveCanceled(InputAction.CallbackContext ctx)
+        {
+            inputService.SetMoveInput(Vector2.zero);
+        }
+
+    }
+}
