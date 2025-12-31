@@ -7,7 +7,7 @@ namespace BTF.Enemy
         public EnemyStateMachine(EnemyController owner) : base(owner)
         {
             States.Add(EnemyStates.Patrol, new EnemyPatrolState());
-            //States.Add(EnemyStates.Chase, new EnemyChaseState());
+            States.Add(EnemyStates.Chase, new EnemyChaseState());
 
             SetOwner();
 

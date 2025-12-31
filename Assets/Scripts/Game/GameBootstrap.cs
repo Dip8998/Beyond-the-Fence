@@ -40,7 +40,7 @@ namespace BTF.Game
             interactionSystem = new InteractionSystem();    
             interactionDetector.Bind(interactionSystem);
 
-            enemyModel = new EnemyModel(3f);
+            enemyModel = new EnemyModel(2f,3f);
             enemyController = new EnemyController(enemyModel);
             enemyView.Bind(enemyController);
             enemyDetection.Bind(playerView.transform, enemyController);

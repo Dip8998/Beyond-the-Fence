@@ -27,6 +27,8 @@ namespace BTF.Enemy
 
         public float GetMoveSpeed() => model.MoveSpeed;
 
+        public float GetChaseSpeed() => model.ChaseSpeed;
+
         public Vector2 GetPatrolTarget() => view.GetCurrentPatrolTarget();
 
         public void AdvancePatrolPoint() => view.AdvancePatrolPoint();
@@ -35,12 +37,14 @@ namespace BTF.Enemy
 
         public Vector2 GetPosition() => view.transform.position;
 
+        public Vector2 GetPlayerPosition() => targetPlayer.position;
+
         public void OnPlayerDetected(Transform target)
         {
             isPlayerInRange = true;
             targetPlayer = target;
             Debug.Log("Player is in Range");
-            //stateMachine.ChangeState(EnemyStates.Chase);
+            stateMachine.ChangeState(EnemyStates.Chase);
         }
 
         public void OnPlayerLost()
