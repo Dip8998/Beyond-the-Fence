@@ -154,7 +154,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -168,7 +168,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 24
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -215,14 +215,14 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Android
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 50
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 0
+    overridden: 1
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
@@ -1135,7 +1135,47 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      blue_octonid_0: 7224320447550451365
+      blue_octonid_1: 3349149467044074990
+      blue_octonid_10: -6060853848472573032
+      blue_octonid_11: -1394621349180556746
+      blue_octonid_12: -7831990611437590129
+      blue_octonid_13: 8867387374836328841
+      blue_octonid_14: -3529026832524858561
+      blue_octonid_15: 8803346832588139609
+      blue_octonid_16: 3980878587177797908
+      blue_octonid_17: 3179097268027966051
+      blue_octonid_18: -3919892201913276611
+      blue_octonid_19: 7594554474329833825
+      blue_octonid_2: 9129472447742184357
+      blue_octonid_20: -4654488198314256895
+      blue_octonid_21: 690401570338314215
+      blue_octonid_22: 4992480981362001468
+      blue_octonid_23: -7851941104886727145
+      blue_octonid_24: -5765396692225345788
+      blue_octonid_25: 4804427591818323040
+      blue_octonid_26: -6774480989049365609
+      blue_octonid_27: -8046610296925464925
+      blue_octonid_28: -3866181764726025431
+      blue_octonid_29: 8630488575388476961
+      blue_octonid_3: 3424312547142732391
+      blue_octonid_30: 5845350834676787444
+      blue_octonid_31: -6496253689033587971
+      blue_octonid_32: -2717949378735823074
+      blue_octonid_33: -4656896565889455895
+      blue_octonid_34: -3807755170203040734
+      blue_octonid_35: -8532484506645658520
+      blue_octonid_36: -7967612601881454324
+      blue_octonid_37: 5970910327072113167
+      blue_octonid_38: 924249691686840616
+      blue_octonid_39: -4306772492846517910
+      blue_octonid_4: 8114229631215908032
+      blue_octonid_5: -8737014112578217225
+      blue_octonid_6: 1099224701427186836
+      blue_octonid_7: -49092645932361071
+      blue_octonid_8: -8039411720871101324
+      blue_octonid_9: -3402720030252212341
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

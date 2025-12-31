@@ -1,4 +1,5 @@
 ﻿using BTF.Camera;
+using BTF.Enemy;
 using BTF.Input;
 using BTF.Interaction;
 using BTF.Player;
@@ -12,11 +13,15 @@ namespace BTF.Game
         [SerializeField] private InputProvider inputProvider;
         [SerializeField] private CameraFollow2D cameraFollow;
         [SerializeField] private InteractionDetector interactionDetector;
+        [SerializeField] private EnemyView enemyView;
+        [SerializeField] private EnemyDetection enemyDetection;
 
         private PlayerModel playerModel;
         private PlayerController playerController;
         private InputService inputService;
         private InteractionSystem interactionSystem;
+        private EnemyModel enemyModel;
+        private EnemyController enemyController;
 
         private void Awake()
         {
@@ -34,6 +39,11 @@ namespace BTF.Game
 
             interactionSystem = new InteractionSystem();    
             interactionDetector.Bind(interactionSystem);
+
+            enemyModel = new EnemyModel(3f);
+            enemyController = new EnemyController(enemyModel);
+            enemyView.Bind(enemyController);
+            enemyDetection.Bind(playerView.transform, enemyController);
         }
 
         private void Update()
