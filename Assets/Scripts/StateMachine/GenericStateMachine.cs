@@ -28,5 +28,7 @@ namespace BTF.StateMachine
                 state.SetOwner(Owner);
             }
         }
+
+        public bool IsInState(Enum newState) => currentState != null && States[newState] == currentState;
     }
 }

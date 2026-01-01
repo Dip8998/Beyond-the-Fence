@@ -39,6 +39,8 @@ namespace BTF.Enemy
 
         public Vector2 GetPlayerPosition() => targetPlayer.position;
 
+        public bool IsChasing() => stateMachine.IsInState(EnemyStates.Chase);
+
         public void OnPlayerDetected(Transform target)
         {
             isPlayerInRange = true;

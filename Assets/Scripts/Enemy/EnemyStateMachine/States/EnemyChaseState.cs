@@ -7,7 +7,7 @@ namespace BTF.Enemy
     {
         private EnemyController owner;
 
-        private const float STOP_DISTANCE = 0.5f;
+        private const float STOP_DISTANCE = 1f;
 
         public void SetOwner(EnemyController owner) => this.owner = owner;
 
@@ -23,11 +23,12 @@ namespace BTF.Enemy
             if(dir.sqrMagnitude <= STOP_DISTANCE * STOP_DISTANCE)
             {
                 owner.SetVelocity(Vector2.zero);
-                return;
             }
-
-            Vector2 velocity = dir.normalized * owner.GetChaseSpeed();
-            owner.SetVelocity(velocity);    
+            else
+            {
+                Vector2 velocity = dir.normalized * owner.GetChaseSpeed();
+                owner.SetVelocity(velocity);
+            }
         }
 
         public void OnStateExit() { }

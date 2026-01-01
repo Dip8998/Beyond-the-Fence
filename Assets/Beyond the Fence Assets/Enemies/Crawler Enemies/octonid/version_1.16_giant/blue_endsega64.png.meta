@@ -444,7 +444,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 24
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -491,14 +491,14 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Android
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 50
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 0
+    overridden: 1
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
@@ -3435,7 +3435,139 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      blue_endsega64_0: -7463064117409138779
+      blue_endsega64_1: -8934285370884721079
+      blue_endsega64_10: -4805957401261681761
+      blue_endsega64_100: -7379668663439867054
+      blue_endsega64_101: 3709812652276500265
+      blue_endsega64_102: -6487726260983357212
+      blue_endsega64_103: 1541707103068742315
+      blue_endsega64_104: -7309607017479984860
+      blue_endsega64_105: -3345116840212246332
+      blue_endsega64_106: -8972411411198677050
+      blue_endsega64_107: -3159801143957075567
+      blue_endsega64_108: -570041685309280854
+      blue_endsega64_109: -350750671859425173
+      blue_endsega64_11: 4804670804149284630
+      blue_endsega64_110: -8901857541357222125
+      blue_endsega64_111: 3770358102063912801
+      blue_endsega64_112: -7057630011152801852
+      blue_endsega64_113: -2529245108200761007
+      blue_endsega64_114: -3947640723924323119
+      blue_endsega64_115: 1629854191575702316
+      blue_endsega64_116: 5497281587501568568
+      blue_endsega64_117: 4774773937685964979
+      blue_endsega64_118: -7931964646848017229
+      blue_endsega64_119: 5858996621112162148
+      blue_endsega64_12: -3032884891277036714
+      blue_endsega64_120: 1090287105542355032
+      blue_endsega64_121: 108733760967040370
+      blue_endsega64_122: -1997918379634604720
+      blue_endsega64_123: -9110757009611336214
+      blue_endsega64_124: -4722343893404477945
+      blue_endsega64_125: -3986197288686762767
+      blue_endsega64_126: 454322757625978265
+      blue_endsega64_127: -5194031837998995472
+      blue_endsega64_128: 176467914260937753
+      blue_endsega64_129: 4940065548751102363
+      blue_endsega64_13: 5769338596791167176
+      blue_endsega64_130: 8565449267817932826
+      blue_endsega64_131: 1934151126823384820
+      blue_endsega64_14: 4416712759173439580
+      blue_endsega64_15: -3202289633095498193
+      blue_endsega64_16: 1186781478278196579
+      blue_endsega64_17: -5046283114798467300
+      blue_endsega64_18: -2862811519983089496
+      blue_endsega64_19: 8580937080573531991
+      blue_endsega64_2: 4204600067394552422
+      blue_endsega64_20: -6090539819688927391
+      blue_endsega64_21: 2356360040602040624
+      blue_endsega64_22: -6435441962472577317
+      blue_endsega64_23: -7194831454959553352
+      blue_endsega64_24: -6229390988409056894
+      blue_endsega64_25: -4745349060192965197
+      blue_endsega64_26: -9112331689400297284
+      blue_endsega64_27: 8909678822797222796
+      blue_endsega64_28: -642556506894758752
+      blue_endsega64_29: 5216537059044871023
+      blue_endsega64_3: -1758771773367170029
+      blue_endsega64_30: -8454944462125113968
+      blue_endsega64_31: -6012638817761564878
+      blue_endsega64_32: 1521234004249820217
+      blue_endsega64_33: 8731733002404542250
+      blue_endsega64_34: 5070472527959785412
+      blue_endsega64_35: -2078346613393645266
+      blue_endsega64_36: -596439685080503434
+      blue_endsega64_37: 5481937741871677339
+      blue_endsega64_38: 7178189894898066915
+      blue_endsega64_39: -8625517474913798995
+      blue_endsega64_4: 1802143693277537723
+      blue_endsega64_40: -3257429174014491720
+      blue_endsega64_41: -7619911939200838738
+      blue_endsega64_42: -8540054425514793062
+      blue_endsega64_43: 1800448239342284764
+      blue_endsega64_44: -5840471227593752555
+      blue_endsega64_45: 9019877384398987054
+      blue_endsega64_46: 3560524612226724910
+      blue_endsega64_47: 8213561346742688251
+      blue_endsega64_48: 1674393359191139206
+      blue_endsega64_49: -6591701902676121277
+      blue_endsega64_5: 4664432959231140717
+      blue_endsega64_50: -101635268581185632
+      blue_endsega64_51: 5533490688147096309
+      blue_endsega64_52: -6686070737597007349
+      blue_endsega64_53: -5647170885217900683
+      blue_endsega64_54: 7744001921624662764
+      blue_endsega64_55: 7599793368142895974
+      blue_endsega64_56: 5027142979856469344
+      blue_endsega64_57: -441950592556059847
+      blue_endsega64_58: 3152334935278342960
+      blue_endsega64_59: -5100641672297035037
+      blue_endsega64_6: 798236295206254445
+      blue_endsega64_60: -1351299277007639345
+      blue_endsega64_61: -7267805240473918265
+      blue_endsega64_62: -4143207051839393827
+      blue_endsega64_63: -7605813327503931882
+      blue_endsega64_64: 2661381194499364109
+      blue_endsega64_65: -4240794046457614227
+      blue_endsega64_66: -5091759941222038723
+      blue_endsega64_67: 1828740861958105592
+      blue_endsega64_68: 8136042122273211854
+      blue_endsega64_69: -5072506962341139203
+      blue_endsega64_7: -7393877988030456837
+      blue_endsega64_70: -8767676930883445506
+      blue_endsega64_71: -5008534054195387706
+      blue_endsega64_72: -8803650129910511307
+      blue_endsega64_73: 1450120376704172152
+      blue_endsega64_74: 6800292419239145873
+      blue_endsega64_75: 5567314758081668988
+      blue_endsega64_76: -4920085303118542116
+      blue_endsega64_77: -8595013481166986806
+      blue_endsega64_78: -3164513058810365407
+      blue_endsega64_79: 4602568758872483956
+      blue_endsega64_8: 8429835625468354690
+      blue_endsega64_80: 380548389062964530
+      blue_endsega64_81: 414548112294802746
+      blue_endsega64_82: -2553158960492171423
+      blue_endsega64_83: 6194853401163402311
+      blue_endsega64_84: -9159468938414949972
+      blue_endsega64_85: 550737023615359801
+      blue_endsega64_86: 7424968077068458870
+      blue_endsega64_87: 5062995617037577429
+      blue_endsega64_88: -8208747922541755246
+      blue_endsega64_89: 4042661636535796544
+      blue_endsega64_9: -3851510772973921318
+      blue_endsega64_90: 888991966859084090
+      blue_endsega64_91: -5258108439094814436
+      blue_endsega64_92: 5288316100086771129
+      blue_endsega64_93: 6898802862734976416
+      blue_endsega64_94: -3390061193391757650
+      blue_endsega64_95: 8119709174269144657
+      blue_endsega64_96: 5986934191949399949
+      blue_endsega64_97: 5531306692678799589
+      blue_endsega64_98: -2274667135005812129
+      blue_endsega64_99: 5545938787535267783
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

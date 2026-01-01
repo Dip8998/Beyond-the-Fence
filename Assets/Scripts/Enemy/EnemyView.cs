@@ -3,17 +3,26 @@
 namespace BTF.Enemy
 {
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Animator))]
     public class EnemyView : MonoBehaviour
     {
         [SerializeField] private Transform[] patrolPoints;
 
         private EnemyController controller;
         private Rigidbody2D rb;
+        private Animator animator;
         private int currentPatrolIndex;
+
+        private Vector2 lastMoveDir = Vector2.down;
+
+        private static readonly int IsMoving = Animator.StringToHash("IsMoving");
+        private static readonly int MoveX = Animator.StringToHash("MoveX");
+        private static readonly int MoveY = Animator.StringToHash("MoveY");
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+            animator = GetComponent<Animator>();
             rb.freezeRotation = true;
             rb.gravityScale = 0f;
             rb.interpolation = RigidbodyInterpolation2D.Interpolate;
@@ -30,12 +39,30 @@ namespace BTF.Enemy
         private void Update()
         {
             controller?.Tick();
+            UpdateAnimation();
         }
 
         private void FixedUpdate()
         {
             if(controller == null) return;
             rb.linearVelocity = controller.GetVelocity();
+        }
+
+        private void UpdateAnimation()
+        {
+            Vector2 velocity = controller.GetVelocity();
+            bool isMoving = velocity.sqrMagnitude > 0.001f;
+
+            animator.SetBool(IsMoving, isMoving);
+
+            if(isMoving )
+            {
+                lastMoveDir = velocity.normalized;
+                animator.SetFloat(MoveX, lastMoveDir.x);
+                animator.SetFloat (MoveY, lastMoveDir.y);
+            }
+
+            animator.speed = controller.IsChasing() ? 1.4f : 1f;
         }
 
         public Vector2 GetCurrentPatrolTarget()
