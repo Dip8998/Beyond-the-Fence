@@ -18,6 +18,10 @@ namespace BTF.Player.PSM.States
             {
                 owner.ChangeState(PlayerStates.Idle);
             }
+            else if (owner.ConsumeAttack())
+            {
+                owner.ChangeState(PlayerStates.Attack);
+            }
         }
 
         public void OnStateExit() { }   

@@ -20,6 +20,7 @@ namespace BTF.Input
             actions.Player.Move.performed += OnMovePerformed;
             actions.Player.Move.canceled += OnMoveCanceled;
             actions.Player.Interact.performed += OnInteractPerformed;
+            actions.Player.Attack.performed += OnAttackPerformed;
             actions.Enable();
         }
 
@@ -28,6 +29,7 @@ namespace BTF.Input
             actions.Player.Move.performed -= OnMovePerformed;
             actions.Player.Move.canceled -= OnMoveCanceled;
             actions.Player.Interact.performed -= OnInteractPerformed;
+            actions.Player.Attack.performed -= OnAttackPerformed;
             actions.Disable();
         }
 
@@ -44,6 +46,11 @@ namespace BTF.Input
         private void OnInteractPerformed(InputAction.CallbackContext ctx)
         {
             inputService.SetInteractInput();
+        }
+
+        private void OnAttackPerformed(InputAction.CallbackContext ctx)
+        {
+            inputService.SetAttackInput();
         }
     }
 }

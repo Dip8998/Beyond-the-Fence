@@ -6,6 +6,9 @@ namespace BTF.Player
     [RequireComponent(typeof(Animator))]
     public sealed class PlayerView : MonoBehaviour
     {
+        [SerializeField] private GameObject swordHitbox;
+        [SerializeField] private float hitboxDistance = 0.5f;
+
         private PlayerController controller;
         private Rigidbody2D rb;
         private Animator animator;
@@ -15,6 +18,7 @@ namespace BTF.Player
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
         private static readonly int MoveX = Animator.StringToHash("MoveX");
         private static readonly int MoveY = Animator.StringToHash("MoveY");
+        private static readonly int AttackTrigger = Animator.StringToHash("Attack");
 
         private void Awake()
         {
@@ -29,6 +33,7 @@ namespace BTF.Player
         public void Bind(PlayerController controller)
         {
             this.controller = controller;
+            controller?.Bind(this);
         }
 
         private void Update()
@@ -62,6 +67,48 @@ namespace BTF.Player
 
             animator.SetFloat(MoveX, lastMoveDir.x);
             animator.SetFloat(MoveY, lastMoveDir.y);
+        }
+
+        public void PlayAttackAnimation()
+        {
+            animator.SetTrigger(AttackTrigger);
+        }
+
+        public void OnAttackStart()
+        {
+            PositionHitbox();
+            EnableHitbox();
+        }
+
+        private void EnableHitbox()
+        {
+            swordHitbox.SetActive(true);
+        }
+
+        public void DisableHitbox()
+        {
+            swordHitbox.SetActive(false);
+        }
+
+        public void OnAttackAnimationComplete()
+        {
+            controller.ChangeState(PlayerStates.Idle);
+        }
+
+        public void PositionHitbox()
+        {
+            Vector2 dir = lastMoveDir;
+
+            if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+            {
+                swordHitbox.transform.localPosition =
+                    new Vector2(Mathf.Sign(dir.x) * hitboxDistance, 0f);
+            }
+            else
+            {
+                swordHitbox.transform.localPosition =
+                    new Vector2(0f, Mathf.Sign(dir.y) * hitboxDistance);
+            }
         }
     }
 }

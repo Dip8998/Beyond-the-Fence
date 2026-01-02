@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using BTF.Interfaces;
+using UnityEngine;
 
 namespace BTF.Enemy
 {
@@ -8,7 +9,6 @@ namespace BTF.Enemy
         private EnemyStateMachine stateMachine;
         private EnemyView view;
 
-        private bool isPlayerInRange;
         private Transform targetPlayer;
 
         private Vector2 currentVelocity;
@@ -37,13 +37,31 @@ namespace BTF.Enemy
 
         public Vector2 GetPosition() => view.transform.position;
 
-        public Vector2 GetPlayerPosition() => targetPlayer.position;
+        public Vector2 GetPlayerPosition()
+        {
+            return targetPlayer != null ? (Vector2)targetPlayer.position : GetPosition();
+        }
 
         public bool IsChasing() => stateMachine.IsInState(EnemyStates.Chase);
 
+        public void TakeDamage(int damage)
+        {
+            model.ReduceHP(damage);
+
+            if(model.CurrentHP <= 0)
+            {
+                Die();
+            }
+        }
+
+        private void Die()
+        {
+            if(view!=null) 
+                view.OnDeath();
+        }
+
         public void OnPlayerDetected(Transform target)
         {
-            isPlayerInRange = true;
             targetPlayer = target;
             Debug.Log("Player is in Range");
             stateMachine.ChangeState(EnemyStates.Chase);
@@ -51,7 +69,6 @@ namespace BTF.Enemy
 
         public void OnPlayerLost()
         {
-            isPlayerInRange = false;
             targetPlayer = null;
             Debug.Log("Player is Out of range");
             stateMachine.ChangeState(EnemyStates.Patrol);

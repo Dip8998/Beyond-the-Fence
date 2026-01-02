@@ -7,9 +7,12 @@ namespace BTF.Player
     public sealed class PlayerController
     {
         private readonly PlayerModel model;
+        private PlayerView view;
         private readonly PlayerStateMachine stateMachine;
         private InputService inputService;
         
+        public PlayerView View => view;
+
         public PlayerController(PlayerModel model, InputService inputService)
         {
             this.model = model;
@@ -21,6 +24,8 @@ namespace BTF.Player
         {
             stateMachine.Update();
         }
+
+        public void Bind(PlayerView view) => this.view = view;
 
         public void ChangeState(PlayerStates newState) => stateMachine?.ChangeState(newState);
 
@@ -34,6 +39,13 @@ namespace BTF.Player
 
             model.Velocity = dir.normalized * model.MoveSpeed;
         }
+
+        public bool ConsumeAttack()
+        {
+            return inputService.ConsumeAttackPress();
+        }
+
+        public void StopMovement() => model.Velocity = Vector2.zero;
 
         public void TakeDamage(int damage) { } 
 

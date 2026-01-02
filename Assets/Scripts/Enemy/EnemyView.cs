@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using BTF.Interfaces;
+using UnityEngine;
 
 namespace BTF.Enemy
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Animator))]
-    public class EnemyView : MonoBehaviour
+    public class EnemyView : MonoBehaviour , IDamageable
     {
         [SerializeField] private Transform[] patrolPoints;
 
@@ -77,6 +78,14 @@ namespace BTF.Enemy
             if(patrolPoints == null || patrolPoints.Length == 0) return;
 
             currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+        }
+
+        public void TakeDamage(int damage) => controller?.TakeDamage(damage);
+
+        public void OnDeath()
+        {
+            GetComponent<Collider2D>().enabled = false;
+            gameObject.SetActive(false);
         }
     }
 }

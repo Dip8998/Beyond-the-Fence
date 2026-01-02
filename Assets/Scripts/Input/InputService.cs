@@ -6,6 +6,7 @@ namespace BTF.Input
     {
         private Vector2 moveInput;
         private bool interactPressed;
+        private bool attackPressed;
 
         public void SetMoveInput(Vector2 input) => moveInput = input;
 
@@ -13,7 +14,17 @@ namespace BTF.Input
 
         public void SetInteractInput() => interactPressed = true;
 
-        public bool ConsumeInput()
+        public void SetAttackInput() => attackPressed = true;
+
+        public bool ConsumeAttackPress()
+        {
+            if(!attackPressed) return false;
+
+            attackPressed = false;
+            return true;
+        }
+
+        public bool ConsumeInteractPress()
         {
             if (!interactPressed) return false;
 

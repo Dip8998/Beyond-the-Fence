@@ -9,6 +9,7 @@ namespace BTF.Player.PSM
         {
             States.Add(PlayerStates.Idle, new PlayerIdleState());
             States.Add(PlayerStates.Move, new PlayerMoveState());
+            States.Add(PlayerStates.Attack, new PlayerAttackState());
 
             SetOwner();
 

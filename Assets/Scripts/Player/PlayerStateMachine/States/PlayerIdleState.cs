@@ -23,6 +23,11 @@ namespace BTF.Player.PSM.States
             {
                 owner.ChangeState(PlayerStates.Move);
             }
+            else if(owner.ConsumeAttack())
+            {
+                owner.ChangeState(PlayerStates.Attack);
+                return;
+            }
         }
 
         public void OnStateExit() { }
