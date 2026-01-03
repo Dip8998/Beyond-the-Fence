@@ -3,6 +3,7 @@ using BTF.Enemy;
 using BTF.Input;
 using BTF.Interaction;
 using BTF.Player;
+using BTF.Resource;
 using UnityEngine;
 
 namespace BTF.Game
@@ -15,6 +16,8 @@ namespace BTF.Game
         [SerializeField] private InteractionDetector interactionDetector;
         [SerializeField] private EnemyView enemyView;
         [SerializeField] private EnemyDetection enemyDetection;
+        [SerializeField] private TreeView treeView;
+        [SerializeField] private BerryView berryView;
 
         private PlayerModel playerModel;
         private PlayerController playerController;
@@ -22,6 +25,10 @@ namespace BTF.Game
         private InteractionSystem interactionSystem;
         private EnemyModel enemyModel;
         private EnemyController enemyController;
+        private TreeModel treeModel;
+        private TreeController treeController;
+        private BerryModel berryModel;
+        private BerryController berryController;
 
         private void Awake()
         {
@@ -44,6 +51,14 @@ namespace BTF.Game
             enemyController = new EnemyController(enemyModel);
             enemyView.Bind(enemyController);
             enemyDetection.Bind(playerView.transform, enemyController);
+
+            treeModel = new TreeModel(5);
+            treeController = new TreeController(treeModel);
+            treeView.Bind(treeController);
+
+            berryModel = new BerryModel();
+            berryController = new BerryController(berryModel);
+            berryView.Bind(berryController);
         }
 
         private void Update()
