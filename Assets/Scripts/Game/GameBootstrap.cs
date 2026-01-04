@@ -2,6 +2,7 @@
 using BTF.Enemy;
 using BTF.Input;
 using BTF.Interaction;
+using BTF.Inventory;
 using BTF.Player;
 using BTF.Resource;
 using UnityEngine;
@@ -29,6 +30,8 @@ namespace BTF.Game
         private TreeController treeController;
         private BerryModel berryModel;
         private BerryController berryController;
+        private InventoryModel inventoryModel;
+        private InventoryController inventoryController;
 
         private void Awake()
         {
@@ -52,12 +55,15 @@ namespace BTF.Game
             enemyView.Bind(enemyController);
             enemyDetection.Bind(playerView.transform, enemyController);
 
+            inventoryModel = new InventoryModel();
+            inventoryController = new InventoryController(inventoryModel);
+
             treeModel = new TreeModel(5);
-            treeController = new TreeController(treeModel);
+            treeController = new TreeController(treeModel, inventoryController);
             treeView.Bind(treeController);
 
             berryModel = new BerryModel();
-            berryController = new BerryController(berryModel);
+            berryController = new BerryController(berryModel, inventoryController);
             berryView.Bind(berryController);
         }
 
