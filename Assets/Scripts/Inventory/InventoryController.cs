@@ -36,6 +36,11 @@
             return true;
         }
 
+        public int GetWoodCount()
+        {
+            return model.WoodCount;
+        }
+
         private void Log()
         {
             UnityEngine.Debug.Log(

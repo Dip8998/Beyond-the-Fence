@@ -106,7 +106,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -120,7 +120,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 24
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -735,7 +735,31 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Jester Walk-Sheet_0: 5325984424702523245
+      Jester Walk-Sheet_1: 2206953533164472585
+      Jester Walk-Sheet_10: 6894496432377159608
+      Jester Walk-Sheet_11: -1527332663164367700
+      Jester Walk-Sheet_12: 4937161471651605607
+      Jester Walk-Sheet_13: -2069303697410541410
+      Jester Walk-Sheet_14: -301647140771573633
+      Jester Walk-Sheet_15: -6773631280790611434
+      Jester Walk-Sheet_16: 4596135951165361735
+      Jester Walk-Sheet_17: -7084519397252801509
+      Jester Walk-Sheet_18: -1049732245358911319
+      Jester Walk-Sheet_19: -8270389493117447713
+      Jester Walk-Sheet_2: 29123233131151828
+      Jester Walk-Sheet_20: -3009975969327164592
+      Jester Walk-Sheet_21: 3831462189514355948
+      Jester Walk-Sheet_22: 5125331405290606747
+      Jester Walk-Sheet_23: 7639956380367752254
+      Jester Walk-Sheet_3: 4649548231382056694
+      Jester Walk-Sheet_4: 2659224399884764758
+      Jester Walk-Sheet_5: -2309221089091795652
+      Jester Walk-Sheet_6: 8621106898488713222
+      Jester Walk-Sheet_7: -554531932335682012
+      Jester Walk-Sheet_8: -6002446709711209065
+      Jester Walk-Sheet_9: -4639672460315963187
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

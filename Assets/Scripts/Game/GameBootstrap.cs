@@ -4,6 +4,7 @@ using BTF.Input;
 using BTF.Interaction;
 using BTF.Inventory;
 using BTF.Player;
+using BTF.Quest;
 using BTF.Resource;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ namespace BTF.Game
         [SerializeField] private EnemyDetection enemyDetection;
         [SerializeField] private TreeView treeView;
         [SerializeField] private BerryView berryView;
+        [SerializeField] private NPCQuestView npcQuestView;
 
         private PlayerModel playerModel;
         private PlayerController playerController;
@@ -32,6 +34,8 @@ namespace BTF.Game
         private BerryController berryController;
         private InventoryModel inventoryModel;
         private InventoryController inventoryController;
+        private NPCQuestModel npcQuestModel;
+        private NPCQuestController npcQuestController;
 
         private void Awake()
         {
@@ -65,6 +69,10 @@ namespace BTF.Game
             berryModel = new BerryModel();
             berryController = new BerryController(berryModel, inventoryController);
             berryView.Bind(berryController);
+
+            npcQuestModel = new NPCQuestModel(3);
+            npcQuestController = new NPCQuestController(npcQuestModel, inventoryController);
+            npcQuestView.Bind(npcQuestController);
         }
 
         private void Update()
