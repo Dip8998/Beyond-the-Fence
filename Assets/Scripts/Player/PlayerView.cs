@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace BTF.Player
@@ -9,21 +10,26 @@ namespace BTF.Player
         [SerializeField] private GameObject swordHitbox;
         [SerializeField] private float hitboxDistance = 0.5f;
 
+        private SpriteRenderer spriteRenderer;
         private PlayerController controller;
         private Rigidbody2D rb;
         private Animator animator;
 
         private Vector2 lastMoveDir = Vector2.down;
+        private Coroutine flashRoutine;
 
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
         private static readonly int MoveX = Animator.StringToHash("MoveX");
         private static readonly int MoveY = Animator.StringToHash("MoveY");
         private static readonly int AttackTrigger = Animator.StringToHash("Attack");
 
+        public PlayerController Controller => controller;
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
 
             rb.gravityScale = 0f;
             rb.freezeRotation = true;
@@ -69,6 +75,21 @@ namespace BTF.Player
             animator.SetFloat(MoveY, lastMoveDir.y);
         }
 
+        public void UpdateFacingDirection(Vector2 input)
+        {
+            Vector2 dir = input.normalized;
+
+            if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+                lastMoveDir = new Vector2(Mathf.Sign(dir.x), 0);
+            else
+                lastMoveDir = new Vector2(0, Mathf.Sign(dir.y));
+
+            animator.SetFloat(MoveX, lastMoveDir.x);
+            animator.SetFloat(MoveY, lastMoveDir.y);
+
+            PositionHitbox();
+        }
+
         public void PlayAttackAnimation()
         {
             animator.SetTrigger(AttackTrigger);
@@ -108,6 +129,33 @@ namespace BTF.Player
             {
                 swordHitbox.transform.localPosition =
                     new Vector2(0f, Mathf.Sign(dir.y) * hitboxDistance);
+            }
+        }
+
+        public void StartFlash()
+        {
+            if (flashRoutine != null)
+                StopCoroutine(flashRoutine);
+
+            flashRoutine = StartCoroutine(FlashRoutine());
+        }
+
+        public void StopFlash()
+        {
+            if (flashRoutine != null)
+                StopCoroutine(flashRoutine);
+
+            spriteRenderer.color = Color.white;
+        }
+
+        private IEnumerator FlashRoutine()
+        {
+            while (true)
+            {
+                spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
+                yield return new WaitForSeconds(0.1f);
+                spriteRenderer.color = Color.white;
+                //yield return new WaitForSeconds(0.1f);
             }
         }
     }

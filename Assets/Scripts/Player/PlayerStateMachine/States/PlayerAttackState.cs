@@ -1,21 +1,32 @@
 ﻿using BTF.Interfaces;
+using BTF.Player;
+using UnityEngine;
 
-namespace BTF.Player.PSM.States
+public class PlayerAttackState : IState<PlayerController>
 {
-    public class PlayerAttackState : IState<PlayerController>
+    private PlayerController owner;
+
+    public void SetOwner(PlayerController owner) => this.owner = owner;
+
+    public void OnStateEnter()
     {
-        private PlayerController owner;
+        owner.IsAttacking = true;
+        owner.StopMovement();
+        owner.View.PlayAttackAnimation();
+    }
 
-        public void SetOwner(PlayerController owner) => this.owner = owner;
-        
-        public void OnStateEnter()
+    public void OnStateExit()
+    {
+        owner.IsAttacking = false;
+    }
+
+    public void Update()
+    {
+        Vector2 input = owner.GetMoveInput();
+
+        if (input.sqrMagnitude > 0.001f)
         {
-            owner.StopMovement();
-            owner.View.PlayAttackAnimation();
+            owner.View.UpdateFacingDirection(input);
         }
-
-        public void Update() { }
-
-        public void OnStateExit() { }
     }
 }

@@ -7,7 +7,7 @@ namespace BTF.Enemy
     {
         private EnemyController owner;
 
-        private const float STOP_DISTANCE = 1.5f;
+        private const float STOP_DISTANCE = 1f;
 
         public void SetOwner(EnemyController owner) => this.owner = owner;
 
