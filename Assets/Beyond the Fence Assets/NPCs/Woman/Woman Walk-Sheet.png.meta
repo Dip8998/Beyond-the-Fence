@@ -118,7 +118,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -132,7 +132,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 24
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -835,7 +835,35 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Woman Walk-Sheet_0: -7351665110547616188
+      Woman Walk-Sheet_1: -4083882041524478775
+      Woman Walk-Sheet_10: 5536104795169515206
+      Woman Walk-Sheet_11: 4862438013779640707
+      Woman Walk-Sheet_12: 7178848965531093486
+      Woman Walk-Sheet_13: 3411439377004835585
+      Woman Walk-Sheet_14: 6592904304803323221
+      Woman Walk-Sheet_15: 6680674969744931576
+      Woman Walk-Sheet_16: -8613845596993280939
+      Woman Walk-Sheet_17: -6757456847036846555
+      Woman Walk-Sheet_18: 676570688661814563
+      Woman Walk-Sheet_19: 6943354170039915240
+      Woman Walk-Sheet_2: -8437682874812017746
+      Woman Walk-Sheet_20: 5481149219428599302
+      Woman Walk-Sheet_21: 1722745454227333149
+      Woman Walk-Sheet_22: -4252378254177958083
+      Woman Walk-Sheet_23: 8051372652373189646
+      Woman Walk-Sheet_24: -2956339218004058544
+      Woman Walk-Sheet_25: 7616155908154152936
+      Woman Walk-Sheet_26: 1468758611317882177
+      Woman Walk-Sheet_27: -3829008910421023509
+      Woman Walk-Sheet_3: 935488774054395565
+      Woman Walk-Sheet_4: 4898078718377181529
+      Woman Walk-Sheet_5: -8326820014459598993
+      Woman Walk-Sheet_6: -211380301085733182
+      Woman Walk-Sheet_7: 6103530764060826102
+      Woman Walk-Sheet_8: -8957630175545900080
+      Woman Walk-Sheet_9: -7857189301559775515
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

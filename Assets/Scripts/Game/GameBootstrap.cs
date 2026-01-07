@@ -1,11 +1,15 @@
 ﻿using BTF.Camera;
 using BTF.Enemy;
+using BTF.Fence;
+using BTF.FirstNB;
 using BTF.Input;
 using BTF.Interaction;
 using BTF.Inventory;
+using BTF.NPC;
 using BTF.Player;
 using BTF.Quest;
 using BTF.Resource;
+using BTF.SeconNB;
 using UnityEngine;
 
 namespace BTF.Game
@@ -21,6 +25,10 @@ namespace BTF.Game
         [SerializeField] private TreeView treeView;
         [SerializeField] private BerryView berryView;
         [SerializeField] private NPCQuestView npcQuestView;
+        [SerializeField] private FirstNeighborView firstNeighborView;
+        [SerializeField] private SecondNeighborView secondNeighborView;
+        [SerializeField] private WeaponGiverView weaponGiverView;
+        [SerializeField] private FenceView fenceView;
 
         private PlayerModel playerModel;
         private PlayerController playerController;
@@ -36,6 +44,11 @@ namespace BTF.Game
         private InventoryController inventoryController;
         private NPCQuestModel npcQuestModel;
         private NPCQuestController npcQuestController;
+        private FirstNeighborModel firstNeighborModel;
+        private FirstNeighborController firstNeighborController;
+        private SecondNeighborModel secondNeighborModel;
+        private SecondNeighborController secondNeighborController;
+        private WeaponGiverController weaponGiverController;
 
         private void Awake()
         {
@@ -73,6 +86,19 @@ namespace BTF.Game
             npcQuestModel = new NPCQuestModel(3);
             npcQuestController = new NPCQuestController(npcQuestModel, inventoryController);
             npcQuestView.Bind(npcQuestController);
+
+            firstNeighborModel = new FirstNeighborModel();
+            firstNeighborController = new FirstNeighborController(firstNeighborModel);
+            firstNeighborView.Bind(firstNeighborController, playerController);
+
+            secondNeighborModel = new SecondNeighborModel();
+            secondNeighborController = new SecondNeighborController(secondNeighborModel);
+            secondNeighborView.Bind(secondNeighborController, firstNeighborController);
+
+            fenceView.Bind(playerController);
+
+            weaponGiverController = new WeaponGiverController();
+            weaponGiverView.Bind(weaponGiverController, playerController);
         }
 
         private void Update()

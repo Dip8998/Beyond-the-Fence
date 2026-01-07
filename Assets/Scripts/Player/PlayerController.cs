@@ -48,7 +48,15 @@ namespace BTF.Player
 
         public bool ConsumeAttack()
         {
+            if (!model.HasWeapon)
+                return false;
+
             return inputService.ConsumeAttackPress();
+        }
+
+        public void ReceiveWeapon()
+        {
+            model.GiveWeapon();
         }
 
         public void StopMovement() => model.Velocity = Vector2.zero;
@@ -84,7 +92,12 @@ namespace BTF.Player
             view.StartFlash();
         }
 
+        public bool HasFenceKey() => model.HasFenceKey;
 
+        public void ReceiveFenceKey()
+        {
+            model.GiveFenceKey();
+        }
 
         private void Die()
         {
