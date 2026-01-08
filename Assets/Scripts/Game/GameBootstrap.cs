@@ -1,4 +1,5 @@
-﻿using BTF.Camera;
+﻿using BTF.Boat;
+using BTF.Camera;
 using BTF.Enemy;
 using BTF.Fence;
 using BTF.FirstNB;
@@ -10,6 +11,7 @@ using BTF.Player;
 using BTF.Quest;
 using BTF.Resource;
 using BTF.SeconNB;
+using BTF.Villager;
 using UnityEngine;
 
 namespace BTF.Game
@@ -29,6 +31,9 @@ namespace BTF.Game
         [SerializeField] private SecondNeighborView secondNeighborView;
         [SerializeField] private WeaponGiverView weaponGiverView;
         [SerializeField] private FenceView fenceView;
+        [SerializeField] private VillagerBoatQuestView villagerBoatQuestView;
+        [SerializeField] private BoatView boatView;
+        [SerializeField] private Transform boatPosition;
 
         private PlayerModel playerModel;
         private PlayerController playerController;
@@ -49,6 +54,8 @@ namespace BTF.Game
         private SecondNeighborModel secondNeighborModel;
         private SecondNeighborController secondNeighborController;
         private WeaponGiverController weaponGiverController;
+        private VillagerBoatQuestModel villagerBoatQuestModel;
+        private VillagerBoatQuestController villagerBoatQuestController;
 
         private void Awake()
         {
@@ -99,7 +106,17 @@ namespace BTF.Game
 
             weaponGiverController = new WeaponGiverController();
             weaponGiverView.Bind(weaponGiverController, playerController);
-        }
+
+            villagerBoatQuestModel = new VillagerBoatQuestModel(4, 0);
+            villagerBoatQuestController = new VillagerBoatQuestController(
+                villagerBoatQuestModel, 
+                inventoryController, 
+                playerController, 
+                boatView, 
+                boatPosition
+                );
+            villagerBoatQuestView.Bind(villagerBoatQuestController);
+        } 
 
         private void Update()
         {
