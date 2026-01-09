@@ -42,7 +42,7 @@ namespace BTF.Villager
             }
         }
 
-        public void Interact()
+        public void Interact(Transform bossIslandPoint)
         {
             switch (model.State)
             {
@@ -52,7 +52,7 @@ namespace BTF.Villager
                     break;
 
                 case VillagerBoatQuestState.InProgress:
-                    TryBuildBoat();
+                    TryBuildBoat(bossIslandPoint);
                     break;
 
                 case VillagerBoatQuestState.BoatReady:
@@ -62,7 +62,7 @@ namespace BTF.Villager
             }
         }
 
-        private void TryBuildBoat()
+        private void TryBuildBoat(Transform bossIslandPoint)
         {
             Debug.Log($"Checking materials: Wood {inventory.GetWoodCount()}/{model.RequiredWood}");
 
@@ -76,11 +76,14 @@ namespace BTF.Villager
             inventory.ConsumeWood(model.RequiredWood);
             inventory.ConsumeGear(model.RequiredGear);
 
-            Object.Instantiate(
+            BoatView boat = Object.Instantiate(
                 boatPrefab,
                 boatSpawnPoint.position,
                 Quaternion.identity
             );
+
+            boat.Bind(player, bossIslandPoint);
+
 
             Debug.Log("Boat Created!");
             model.BoatReady();

@@ -5,6 +5,8 @@ namespace BTF.Villager
 {
     public class VillagerBoatQuestView : MonoBehaviour, IInteractable
     {
+        [SerializeField] private Transform bossIslandPoint;
+
         private VillagerBoatQuestController controller;
 
         public void Bind(VillagerBoatQuestController controller)
@@ -22,7 +24,7 @@ namespace BTF.Villager
                 return;
             }
 
-            controller.Interact();
+            controller.Interact(bossIslandPoint);
         }
     }
 }

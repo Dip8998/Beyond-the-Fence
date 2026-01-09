@@ -16,6 +16,7 @@ namespace BTF.Player
         public PlayerView View => view;
         public bool IsAttacking { get;  set; }
         public bool IsInvincible => model.IsInvincible;
+        public bool IsLocked { get; private set; }
 
         public PlayerController(PlayerModel model, InputService inputService)
         {
@@ -28,8 +29,9 @@ namespace BTF.Player
 
         public void Tick()
         {
-            UpdateInvincibility();
+            if (IsLocked) return;
 
+            UpdateInvincibility();
             stateMachine.Update();
         }
 
@@ -37,7 +39,13 @@ namespace BTF.Player
 
         public void Move(Vector2 dir)
         {
-            if(dir.sqrMagnitude < 0.001f)
+            if (IsLocked)
+            {
+                model.Velocity = Vector2.zero;
+                return;
+            }
+
+            if (dir.sqrMagnitude < 0.001f)
             {
                 model.Velocity = Vector2.zero;
                 return;
@@ -103,6 +111,17 @@ namespace BTF.Player
         {
             Debug.Log("PLAYER DIED");
             view.gameObject.SetActive(false);
+        }
+
+        public void Lock()
+        {
+            IsLocked = true;
+            StopMovement();
+        }
+
+        public void Unlock()
+        {
+            IsLocked = false;
         }
 
         public void Heal(int amount) { }
