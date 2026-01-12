@@ -41,14 +41,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Interior
+    uniqueID: 2916802541
+    locked: 0
   - name: Ground
     uniqueID: 1329569041
     locked: 0
-  - name: World
-    uniqueID: 3421961219
-    locked: 0
   - name: Roof
     uniqueID: 2584188393
+    locked: 0
+  - name: World
+    uniqueID: 3421961219
     locked: 0
   m_RenderingLayers:
   - Default

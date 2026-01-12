@@ -124,7 +124,17 @@ namespace BTF.Player
             IsLocked = false;
         }
 
-        public void Heal(int amount) { }
+        public void Heal(int amount)
+        {
+            model.CurrentHP += amount;
+            if (model.CurrentHP > model.MaxHP)
+                model.CurrentHP = model.MaxHP;
+        }
+
+        public void HealToFull()
+        {
+            model.CurrentHP = model.MaxHP;
+        }
 
         public Vector2 GetVelocity() => model.Velocity;
 
@@ -133,3 +143,4 @@ namespace BTF.Player
         public bool HasMoveInput() => inputService.GetMoveInput().sqrMagnitude > 0.001f;
     }
 }
+    

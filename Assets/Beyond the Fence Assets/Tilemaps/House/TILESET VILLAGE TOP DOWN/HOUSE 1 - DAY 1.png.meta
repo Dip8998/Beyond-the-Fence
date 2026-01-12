@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 776aee9dfe2c95344bd560406773adcf
+guid: eeaec172b648a234ab32c583ed07eba6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7749480708785602758
-    second: HOUSE 1 - DAY_0
+      213: 310229459219333388
+    second: HOUSE 1 - DAY 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,67 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HOUSE 1 - DAY_0
+      name: HOUSE 1 - DAY 1_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 57
+        y: 0
         width: 80
-        height: 47
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: a3f77179a50547490800000000000000
-      internalID: -7749480708785602758
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HOUSE 1 - DAY_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 8
-        width: 80
-        height: 49
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 991466a5b4df8a74f9152ac6398defae
-      internalID: -1746439162
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: HOUSE 1 - DAY_2
-      rect:
-        serializedVersion: 2
-        x: 30
-        y: 8
-        width: 20
-        height: 21
+        height: 82
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: 4bf0df811ec9a1f408dbaf75efbc3d57
-      internalID: -1617080205
+      spriteID: c0141abac082e4400800000000000000
+      internalID: 310229459219333388
       vertices: []
       indices: 
       edges: []
@@ -195,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 2ee9d71cf9d6f614f91d0eb6a6811d8a
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -205,9 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HOUSE 1 - DAY_0: -7749480708785602758
-      HOUSE 1 - DAY_1: -1746439162
-      HOUSE 1 - DAY_2: -1617080205
+      HOUSE 1 - DAY 1_0: 310229459219333388
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
