@@ -10,6 +10,7 @@ namespace BTF.Scenes
         private readonly PlayerController player;
         private readonly PlayerView playerView;
         private GameContext context;
+        private readonly PlayerCollisionService collisionService = new();
 
         private Scene? currentScene;
         private Vector3 returnPosition;
@@ -30,6 +31,7 @@ namespace BTF.Scenes
 
             returnPosition = entrancePosition;
             player.Lock();
+            collisionService.EnterInterior();
 
             SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive)
                 .completed += _ => OnSceneLoaded(sceneName);
@@ -69,6 +71,7 @@ namespace BTF.Scenes
                     TeleportPlayer(returnPosition);
                     player.Unlock();
                 };
+            collisionService.ExitInterior();
         }
 
         public void SetContext(GameContext context)

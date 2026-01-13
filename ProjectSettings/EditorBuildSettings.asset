@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SecondNeighborHouse.unity
     guid: 8e06e0ea6d3c5b745b1edf5b96ea8b29
+  - enabled: 1
+    path: Assets/Scenes/SlimeArea.unity
+    guid: e2df07c34f4da314dad837344d05b447
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 56789f7cac8574e4f832d12260252950, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 7d7aee2b9092bd149accec401b5b128f, type: 3}

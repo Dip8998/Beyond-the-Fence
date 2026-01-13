@@ -27,8 +27,7 @@ namespace BTF.Game
         [SerializeField] private InteractionDetector interactionDetector;
 
         [Header("World Objects (Village Only)")]
-        [SerializeField] private EnemyView enemyView;
-        [SerializeField] private EnemyDetection enemyDetection;
+        [SerializeField] private EnemyView[] villageEnemies;
         [SerializeField] private TreeView treeView;
         [SerializeField] private BerryView berryView;
         [SerializeField] private NPCQuestView npcQuestView;
@@ -89,10 +88,21 @@ namespace BTF.Game
             var npcQuestController = new NPCQuestController(npcQuestModel, inventoryController);
             npcQuestView.Bind(npcQuestController);
 
-            var enemyModel = new EnemyModel(2f, 3f, 10);
-            bossController = new EnemyController(enemyModel);
-            enemyView.Bind(bossController);
-            enemyDetection.Bind(playerView.transform, bossController);
+            foreach (var enemyView in villageEnemies)
+            {
+                var model = new EnemyModel(
+                    moveSpeed: 2f,
+                    chaseSpeed: 3f,
+                    maxHP: 10
+                );
+
+                var controller = new EnemyController(model);
+
+                enemyView.Bind(controller);
+
+                var detection = enemyView.GetComponentInChildren<EnemyDetection>();
+                detection.Bind(playerView.transform, controller);
+            }
 
             var firstNeighborModel = new FirstNeighborModel();
             firstNeighborController = new FirstNeighborController(firstNeighborModel);
