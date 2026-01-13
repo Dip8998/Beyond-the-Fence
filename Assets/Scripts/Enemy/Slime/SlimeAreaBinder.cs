@@ -1,7 +1,8 @@
-﻿using UnityEngine;
-using BTF.Scenes;
+﻿using BTF.Enemy;
 using BTF.Game;
-using BTF.Enemy;
+using BTF.Resource;
+using BTF.Scenes;
+using UnityEngine;
 
 namespace BTF.Slime
 {
@@ -12,29 +13,23 @@ namespace BTF.Slime
 
         [Header("Big Slime Boss")]
         [SerializeField] private EnemyView bossView;
+        [SerializeField] private GearView gearView;
 
         public void Bind(GameContext context)
         {
             foreach (var slimeView in slimeViews)
             {
-                BindEnemy(
-                    slimeView,
-                    context,
-                    moveSpeed: 1.2f,
-                    chaseSpeed: 2.2f,
-                    hp: 3
-                );
+                BindEnemy(slimeView, context, 1.2f, 2.2f, 3);
             }
 
             if (bossView != null)
             {
-                BindEnemy(
-                    bossView,
-                    context,
-                    moveSpeed: 0f,   
-                    chaseSpeed: 0f, 
-                    hp: 25          
-                );
+                BindEnemy(bossView, context, 0f, 0f, 25);
+            }
+
+            if (gearView != null)
+            {
+                gearView.Bind(context.Inventory);
             }
         }
 

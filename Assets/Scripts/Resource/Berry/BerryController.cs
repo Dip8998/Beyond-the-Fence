@@ -1,4 +1,5 @@
 ﻿using BTF.Inventory;
+using BTF.Player;
 using System;
 
 namespace BTF.Resource
@@ -7,14 +8,21 @@ namespace BTF.Resource
     {
         private readonly BerryModel model;
         private readonly InventoryController inventoryController;
+        private readonly PlayerController player;
+
+        private const int HEAL_AMOUNT = 10;
 
         public event Action OnBerryCollect;
         public event Action OnBerryRegrow;
 
-        public BerryController(BerryModel model, InventoryController inventoryController)
+        public BerryController(
+            BerryModel model,
+            InventoryController inventoryController,
+            PlayerController player)
         {
             this.model = model;
             this.inventoryController = inventoryController;
+            this.player = player;
         }
 
         public bool CanCollect() => model.IsAvailable;
@@ -23,15 +31,18 @@ namespace BTF.Resource
         {
             if (!model.IsAvailable) return;
 
-            model?.Consume();
-            inventoryController?.AddBerry(1);
-            OnBerryCollect.Invoke();
+            model.Consume();
+            inventoryController.AddBerry(1);
+
+            player.Heal(HEAL_AMOUNT); 
+
+            OnBerryCollect?.Invoke();
         }
 
         public void Regrow()
         {
-            model?.Regrow();
-            OnBerryRegrow.Invoke();
+            model.Regrow();
+            OnBerryRegrow?.Invoke();
         }
     }
 }

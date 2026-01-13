@@ -1,4 +1,5 @@
 ﻿using BTF.Interfaces;
+using System;
 using UnityEngine;
 
 namespace BTF.Enemy
@@ -11,7 +12,8 @@ namespace BTF.Enemy
 
         private EnemyController controller;
         private Rigidbody2D rb;
-        private Animator animator;
+        [NonSerialized]
+        protected Animator animator;
         private int currentPatrolIndex;
 
         private Vector2 lastMoveDir = Vector2.down;
@@ -20,7 +22,7 @@ namespace BTF.Enemy
         private static readonly int MoveX = Animator.StringToHash("MoveX");
         private static readonly int MoveY = Animator.StringToHash("MoveY");
 
-        private void Awake()
+        protected virtual void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
@@ -82,7 +84,7 @@ namespace BTF.Enemy
 
         public void TakeDamage(int damage) => controller?.TakeDamage(damage);
 
-        public void OnDeath()
+        public virtual void OnDeath()
         {
             GetComponent<Collider2D>().enabled = false;
             gameObject.SetActive(false);

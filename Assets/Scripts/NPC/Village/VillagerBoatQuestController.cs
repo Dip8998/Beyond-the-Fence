@@ -1,6 +1,7 @@
 ﻿using BTF.Boat;
 using BTF.Inventory;
 using BTF.Player;
+using BTF.World;
 using UnityEngine;
 
 namespace BTF.Villager
@@ -13,19 +14,22 @@ namespace BTF.Villager
 
         private readonly BoatView boatPrefab;
         private readonly Transform boatSpawnPoint;
+        private readonly BridgeController bridgeController;
 
         public VillagerBoatQuestController(
             VillagerBoatQuestModel model,
             InventoryController inventory,
             PlayerController player,
             BoatView boatPrefab,
-            Transform boatSpawnPoint)
+            Transform boatSpawnPoint,
+            BridgeController bridgeController)
         {
             this.model = model;
             this.inventory = inventory;
             this.player = player;
             this.boatPrefab = boatPrefab;
             this.boatSpawnPoint = boatSpawnPoint;
+            this.bridgeController = bridgeController;
         }
 
         public VillagerBoatQuestState GetState() => model.State;
@@ -38,7 +42,7 @@ namespace BTF.Villager
             if (model.State == VillagerBoatQuestState.Inactive)
             {
                 model.Activate();
-                Debug.Log("Villager quest activated");
+                Debug.Log("Villager: My son was taken...");
             }
         }
 
@@ -47,12 +51,12 @@ namespace BTF.Villager
             switch (model.State)
             {
                 case VillagerBoatQuestState.Active:
-                    Debug.Log("Villager: My son was taken... I need wood & gear.");
+                    Debug.Log("Villager: My son was taken! Bring me 10 wood.");
                     model.StartQuest();
                     break;
 
                 case VillagerBoatQuestState.InProgress:
-                    TryBuildBoat(bossIslandPoint);
+                    HandleProgress(bossIslandPoint);
                     break;
 
                 case VillagerBoatQuestState.BoatReady:
@@ -62,19 +66,49 @@ namespace BTF.Villager
             }
         }
 
-        private void TryBuildBoat(Transform bossIslandPoint)
+        private void HandleProgress(Transform bossIslandPoint)
         {
-            Debug.Log($"Checking materials: Wood {inventory.GetWoodCount()}/{model.RequiredWood}");
-
-            if (!inventory.HasWood(model.RequiredWood) /*||
-                !inventory.HasGear(model.RequiredGear)*/)
+            if (!model.HasRealizedGear)
             {
-                Debug.Log("Villager: You still need materials.");
+                if (!inventory.HasWood(model.RequiredBoatWood))
+                {
+                    Debug.Log("Villager: I need 10 wood to build the boat.");
+                    return;
+                }
+
+                inventory.ConsumeWood(model.RequiredBoatWood);
+                model.RealizeGear();
+
+                Debug.Log("Villager: Wait… I forgot something. The boat needs gear.");
+                Debug.Log("Villager: We need a bridge to reach the slime island.");
+
                 return;
             }
 
-            inventory.ConsumeWood(model.RequiredWood);
-            inventory.ConsumeGear(model.RequiredGear);
+            if (!bridgeController.IsBuilt)
+            {
+                if (!inventory.HasWood(model.RequiredBridgeWood))
+                {
+                    Debug.Log("Villager: Bring 20 wood to build the bridge.");
+                    return;
+                }
+
+                bridgeController.Build();
+                Debug.Log("Villager: The bridge is ready. Go to the slime island!");
+                return;
+            }
+
+            TryBuildBoat(bossIslandPoint);
+        }
+
+
+        private void TryBuildBoat(Transform bossIslandPoint)
+        {
+            if (!inventory.HasGear(model.RequiredGear))
+            {
+                Debug.Log("Villager: You still need the gear from the slime boss.");
+                return;
+            }
 
             BoatView boat = Object.Instantiate(
                 boatPrefab,
@@ -84,8 +118,7 @@ namespace BTF.Villager
 
             boat.Bind(player, bossIslandPoint);
 
-
-            Debug.Log("Boat Created!");
+            Debug.Log("Villager: The boat is ready!");
             model.BoatReady();
         }
     }

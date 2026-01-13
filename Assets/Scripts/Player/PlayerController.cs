@@ -86,7 +86,7 @@ namespace BTF.Player
             if (model.IsInvincible) return;
 
             model.CurrentHP -= damage;
-
+            Debug.Log($"PLAYER TOOK {damage} DAMAGE, CURRENT HP: {model.CurrentHP}");
             StartInvincibility();
 
             if (model.CurrentHP <= 0)

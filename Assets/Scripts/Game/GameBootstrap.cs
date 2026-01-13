@@ -14,6 +14,7 @@ using BTF.Resource;
 using BTF.Scenes;
 using BTF.SeconNB;
 using BTF.Villager;
+using BTF.World;
 using UnityEngine;
 
 namespace BTF.Game
@@ -30,12 +31,13 @@ namespace BTF.Game
         [SerializeField] private EnemyView[] villageEnemies;
         [SerializeField] private TreeView treeView;
         [SerializeField] private BerryView berryView;
-        [SerializeField] private NPCQuestView npcQuestView;
         [SerializeField] private WeaponGiverView weaponGiverView;
         [SerializeField] private FenceView fenceView;
         [SerializeField] private VillagerBoatQuestView villagerBoatQuestView;
         [SerializeField] private BoatView boatView;
         [SerializeField] private Transform boatPosition;
+        [SerializeField] private GameObject slimeBridge;
+        [SerializeField] private GameObject bridgeBlocker;
 
         [Header("Interiors")]
         [SerializeField] private InteriorEntrance[] interiorEntrances;
@@ -81,12 +83,8 @@ namespace BTF.Game
             treeView.Bind(treeController);
 
             var berryModel = new BerryModel();
-            var berryController = new BerryController(berryModel, inventoryController);
+            var berryController = new BerryController(berryModel, inventoryController, playerController);
             berryView.Bind(berryController);
-
-            var npcQuestModel = new NPCQuestModel(3);
-            var npcQuestController = new NPCQuestController(npcQuestModel, inventoryController);
-            npcQuestView.Bind(npcQuestController);
 
             foreach (var enemyView in villageEnemies)
             {
@@ -115,13 +113,21 @@ namespace BTF.Game
             var weaponGiverController = new WeaponGiverController();
             weaponGiverView.Bind(weaponGiverController, playerController);
 
-            var villagerBoatQuestModel = new VillagerBoatQuestModel(4, 0);
+            var bridgeController = new BridgeController(
+                inventoryController,
+                slimeBridge,
+                bridgeBlocker,
+                requiredWood: 20
+            );
+
+            var villagerBoatQuestModel = new VillagerBoatQuestModel(4, 10, 1);
             var villagerBoatQuestController = new VillagerBoatQuestController(
                 villagerBoatQuestModel,
                 inventoryController,
                 playerController,
                 boatView,
-                boatPosition
+                boatPosition,
+                bridgeController
             );
             villagerBoatQuestView.Bind(villagerBoatQuestController);
 
@@ -136,7 +142,8 @@ namespace BTF.Game
                 firstNeighborController,
                 secondNeighborController,
                 bossController,
-                interiorService
+                interiorService,
+                inventoryController
             );
 
             interiorService.SetContext(gameContext);
