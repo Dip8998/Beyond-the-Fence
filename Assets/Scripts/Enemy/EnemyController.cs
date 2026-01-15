@@ -1,4 +1,5 @@
 ﻿using BTF.Interfaces;
+using System;
 using UnityEngine;
 
 namespace BTF.Enemy
@@ -12,6 +13,7 @@ namespace BTF.Enemy
         private Transform targetPlayer;
 
         private Vector2 currentVelocity;
+        public event Action OnEnemyDied;
 
         public EnemyController(EnemyModel model)
         {
@@ -56,8 +58,8 @@ namespace BTF.Enemy
 
         private void Die()
         {
-            if(view!=null) 
-                view.OnDeath();
+            OnEnemyDied?.Invoke();
+            view?.OnDeath();
         }
 
         public void OnPlayerDetected(Transform target)

@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Woman old portrait_0: 4511239053430218420
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

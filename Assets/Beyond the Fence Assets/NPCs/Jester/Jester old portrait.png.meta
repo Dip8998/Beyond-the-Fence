@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Jester old portrait_0: -6605718319921171711
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

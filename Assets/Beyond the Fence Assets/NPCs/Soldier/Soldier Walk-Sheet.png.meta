@@ -685,7 +685,29 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Soldier Walk-Sheet_0: 454025447195939912
+      Soldier Walk-Sheet_1: 670900700439105376
+      Soldier Walk-Sheet_10: -9205855763589577555
+      Soldier Walk-Sheet_11: 2269319420913782651
+      Soldier Walk-Sheet_12: -7164993122819165153
+      Soldier Walk-Sheet_13: -1692274674946839001
+      Soldier Walk-Sheet_14: -1349287303667436030
+      Soldier Walk-Sheet_15: -187076321608063104
+      Soldier Walk-Sheet_16: 292720004984059623
+      Soldier Walk-Sheet_17: -3584241652681554668
+      Soldier Walk-Sheet_18: 2795636089655122121
+      Soldier Walk-Sheet_19: 4558307329580012519
+      Soldier Walk-Sheet_2: -1320400518855034676
+      Soldier Walk-Sheet_20: 1869879648460104719
+      Soldier Walk-Sheet_21: -1050565062966934339
+      Soldier Walk-Sheet_3: -2233657217067202581
+      Soldier Walk-Sheet_4: -7634049239264938544
+      Soldier Walk-Sheet_5: 2734653772910705371
+      Soldier Walk-Sheet_6: -1677687372424325827
+      Soldier Walk-Sheet_7: 1050021911644333925
+      Soldier Walk-Sheet_8: -5799259638181404392
+      Soldier Walk-Sheet_9: 7028446353117376064
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Soldier old portrait_0: 6390545239394670418
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -4,8 +4,6 @@ using UnityEngine;
 
 namespace BTF.Enemy
 {
-    [RequireComponent(typeof(Rigidbody2D))]
-    [RequireComponent(typeof(Animator))]
     public class EnemyView : MonoBehaviour , IDamageable
     {
         [SerializeField] private Transform[] patrolPoints;
@@ -17,6 +15,7 @@ namespace BTF.Enemy
         private int currentPatrolIndex;
 
         private Vector2 lastMoveDir = Vector2.down;
+        public EnemyController Controller => controller;
 
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
         private static readonly int MoveX = Animator.StringToHash("MoveX");

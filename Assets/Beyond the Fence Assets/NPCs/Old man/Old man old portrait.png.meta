@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Old man old portrait_0: -2137589879801086046
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
