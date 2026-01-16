@@ -155,7 +155,6 @@ namespace BTF.Player
                 spriteRenderer.color = new Color(1f, 1f, 1f, 0.5f);
                 yield return new WaitForSeconds(0.1f);
                 spriteRenderer.color = Color.white;
-                //yield return new WaitForSeconds(0.1f);
             }
         }
     }

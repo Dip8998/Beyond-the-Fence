@@ -1,5 +1,6 @@
 ﻿using BTF.Input;
 using BTF.Player.PSM;
+using System;
 using UnityEngine;
 
 namespace BTF.Player
@@ -18,6 +19,8 @@ namespace BTF.Player
         public bool IsInvincible => model.IsInvincible;
         public bool IsLocked { get; private set; }
         public bool IsMovementLocked { get; private set; }
+
+        public event Action OnHealthChanged;
 
         public PlayerController(PlayerModel model, InputService inputService)
         {
@@ -96,7 +99,8 @@ namespace BTF.Player
             if (model.IsInvincible) return;
 
             model.CurrentHP -= damage;
-            Debug.Log($"PLAYER TOOK {damage} DAMAGE, CURRENT HP: {model.CurrentHP}");
+            OnHealthChanged?.Invoke();
+
             StartInvincibility();
 
             if (model.CurrentHP <= 0)
@@ -139,11 +143,14 @@ namespace BTF.Player
             model.CurrentHP += amount;
             if (model.CurrentHP > model.MaxHP)
                 model.CurrentHP = model.MaxHP;
+
+            OnHealthChanged?.Invoke();
         }
 
         public void HealToFull()
         {
             model.CurrentHP = model.MaxHP;
+            OnHealthChanged?.Invoke();
         }
 
         public Vector2 GetVelocity() => model.Velocity;
@@ -151,6 +158,9 @@ namespace BTF.Player
         public Vector2 GetMoveInput() => inputService.GetMoveInput();
 
         public bool HasMoveInput() => inputService.GetMoveInput().sqrMagnitude > 0.001f;
+
+        public int GetCurrentHP() => model.CurrentHP;
+        public int GetMaxHP() => model.MaxHP;
     }
 }
     

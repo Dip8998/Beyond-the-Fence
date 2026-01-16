@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace BTF.Inventory
 {
     public class InventoryModel
@@ -14,7 +16,10 @@ namespace BTF.Inventory
         }
 
         public void AddWood(int c) => WoodCount += c;
-        public void AddBerry(int c) => BerryCount += c;
+        public void AddBerry(int c)
+        {
+            BerryCount = Mathf.Max(0, BerryCount + c);
+        }
         public void AddGear(int c) => GearCount += c;
 
         public bool HasWood(int c) => WoodCount >= c;

@@ -13,6 +13,9 @@ using BTF.Quest;
 using BTF.Resource;
 using BTF.Scenes;
 using BTF.SeconNB;
+using BTF.UI;
+using BTF.UI.Health;
+using BTF.UI.Inventory;
 using BTF.Villager;
 using BTF.World;
 using UnityEngine;
@@ -46,6 +49,11 @@ namespace BTF.Game
         [SerializeField] private GameObject worldRoot;
         [SerializeField] private InteriorSceneId startInterior = InteriorSceneId.PlayerHouse;
         [SerializeField] private Transform playerInteriorReturnDummy;
+
+        [Header("UI")]
+        [SerializeField] private InventoryUIView inventoryUIView;
+        [SerializeField] private PlayerHealthUIView playerHealthUIView;
+        [SerializeField] private BerryButtonView berryButtonView;
 
         private PlayerController playerController;
         private InputService inputService;
@@ -90,8 +98,27 @@ namespace BTF.Game
             treeView.Bind(treeController);
 
             var berryModel = new BerryModel();
-            var berryController = new BerryController(berryModel, inventoryController, playerController);
+            var berryController = new BerryController(berryModel, inventoryController);
             berryView.Bind(berryController);
+
+            var inventoryUIModel = new InventoryUIModel();
+            var inventoryUIController = new InventoryUIController(
+                inventoryUIModel,
+                inventoryUIView,
+                inventoryController
+            );
+
+            var healthUIModel = new PlayerHealthUIModel();
+            var healthUIController = new PlayerHealthUIController(
+                healthUIModel,
+                playerHealthUIView,
+                playerController
+            );
+
+            var berryButtonController =
+                new BerryButtonController(inventoryController, playerController);
+
+            berryButtonView.Bind(berryButtonController, inventoryController);
 
             foreach (var enemyView in villageEnemies)
             {

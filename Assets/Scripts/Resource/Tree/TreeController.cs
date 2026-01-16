@@ -19,11 +19,14 @@ namespace BTF.Resource
 
         public void TakeDamage(int damage)
         {
-            model?.ReduceHP(damage);
+            if (model.IsCut)
+                return;
 
-            if(model.CurrentHP <= 0)
+            model.ReduceHP(damage);
+
+            if (model.IsCut)
             {
-                inventoryController?.AddWood(1);
+                inventoryController.AddWood(1);
                 OnTreeCut?.Invoke();
             }
         }
