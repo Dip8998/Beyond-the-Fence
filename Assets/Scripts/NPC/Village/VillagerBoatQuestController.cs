@@ -1,4 +1,5 @@
 ﻿using BTF.Boat;
+using BTF.Game;
 using BTF.Inventory;
 using BTF.Player;
 using BTF.World;
@@ -36,7 +37,7 @@ namespace BTF.Villager
 
         public void TryActivate()
         {
-            if (!player.HasFenceKey())
+            if (!GameProgress.IsFenceUnlocked)
                 return;
 
             if (model.State == VillagerBoatQuestState.Inactive)

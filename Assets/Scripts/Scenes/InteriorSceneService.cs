@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using BTF.Player;
 using BTF.Game;
+using System;
 
 namespace BTF.Scenes
 {
@@ -14,6 +15,7 @@ namespace BTF.Scenes
 
         private Scene? currentScene;
         private Vector3 returnPosition;
+        public event Action OnExitInterior;
 
         public InteriorSceneService(
             PlayerController player,
@@ -69,9 +71,11 @@ namespace BTF.Scenes
                 {
                     currentScene = null;
                     TeleportPlayer(returnPosition);
+                    collisionService.ExitInterior();
                     player.Unlock();
+
+                    OnExitInterior?.Invoke();
                 };
-            collisionService.ExitInterior();
         }
 
         public void SetContext(GameContext context)

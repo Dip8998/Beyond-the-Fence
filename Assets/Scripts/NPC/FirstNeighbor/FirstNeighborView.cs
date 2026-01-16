@@ -32,7 +32,6 @@ namespace BTF.FirstNB
                 case FirstNeighborState.ConflictResolved:
                     Debug.Log("Thank you! Take this key and unlock the fence.");
                     controller.GiveKey(playerController);
-                    GameProgress.IsFenceUnlocked = true;
                     break;
             }
         }

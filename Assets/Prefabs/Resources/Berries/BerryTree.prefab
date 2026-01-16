@@ -95,7 +95,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grownBerries: {fileID: 6150393215058878864}
   ungrownBerries: {fileID: 449947728437188346}
-  regrowTime: 3
+  regrowTime: 30
 --- !u!1001 &2803599765725337185
 PrefabInstance:
   m_ObjectHideFlags: 0

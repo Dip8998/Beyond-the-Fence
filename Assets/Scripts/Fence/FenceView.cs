@@ -1,4 +1,5 @@
-﻿using BTF.Interfaces;
+﻿using BTF.Game;
+using BTF.Interfaces;
 using BTF.Player;
 using UnityEngine;
 
@@ -30,6 +31,7 @@ namespace BTF.Fence
         private void Unlock()
         {
             Debug.Log("Fence unlocked!");
+            GameProgress.IsFenceUnlocked = true;
             fenceCollider.enabled = false;
             fenceVisual.SetActive(false);
         }

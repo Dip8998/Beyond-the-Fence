@@ -4,6 +4,8 @@ namespace BTF.Boss
 {
     public sealed class BossView : BossViewBase
     {
+        [SerializeField] private GameObject villagerSon;
+
         private static readonly int AttackTrigger =
             Animator.StringToHash("AttackBoss");
 
@@ -16,6 +18,8 @@ namespace BTF.Boss
         public override void OnDeath()
         {
             Debug.Log("FINAL BOSS DEFEATED");
+            if (villagerSon != null)
+                villagerSon.SetActive(true);
             base.OnDeath();
         }
     }

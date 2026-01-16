@@ -24,7 +24,7 @@ namespace BTF.Slime
 
             if (bossView != null)
             {
-                BindEnemy(bossView, context, 0f, 0f, 25);
+                BindEnemy(bossView, context, 0f, 0f, 100);
             }
 
             if (gearView != null)

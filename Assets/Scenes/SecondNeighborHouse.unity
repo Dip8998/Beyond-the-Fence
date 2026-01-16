@@ -12465,15 +12465,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1557142513949484115, guid: 236dc853fc5509c40aaac7e53ef8deaf, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.4419
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1557142513949484115, guid: 236dc853fc5509c40aaac7e53ef8deaf, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.4419
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1557142513949484115, guid: 236dc853fc5509c40aaac7e53ef8deaf, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.4419
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1557142513949484115, guid: 236dc853fc5509c40aaac7e53ef8deaf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12519,6 +12519,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SecondNeighbor
       objectReference: {fileID: 0}
+    - target: {fileID: 6797041580894439783, guid: 236dc853fc5509c40aaac7e53ef8deaf, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 96415819128256430, guid: 8952fb0171cd96640a9ffdb211415626, type: 3}
     - target: {fileID: 6797041580894439783, guid: 236dc853fc5509c40aaac7e53ef8deaf, type: 3}
       propertyPath: m_SortingOrder
       value: 30

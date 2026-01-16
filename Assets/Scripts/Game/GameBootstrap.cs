@@ -42,6 +42,11 @@ namespace BTF.Game
         [Header("Interiors")]
         [SerializeField] private InteriorEntrance[] interiorEntrances;
 
+        [Header("Startup")]
+        [SerializeField] private GameObject worldRoot;
+        [SerializeField] private InteriorSceneId startInterior = InteriorSceneId.PlayerHouse;
+        [SerializeField] private Transform playerInteriorReturnDummy;
+
         private PlayerController playerController;
         private InputService inputService;
         private InteractionSystem interactionSystem;
@@ -59,6 +64,8 @@ namespace BTF.Game
 
         private void Awake()
         {
+            worldRoot.SetActive(false);
+
             Debug.Assert(playerView != null, "PlayerView is NULL");
             Debug.Assert(inputProvider != null, "InputProvider is NULL");
             Debug.Assert(cameraFollow != null, "CameraFollow2D is NULL");
@@ -155,12 +162,29 @@ namespace BTF.Game
             }
         }
 
+        private void Start()
+        {
+            playerController.Lock();
+            interiorService.OnExitInterior += OnFirstInteriorExit;
+
+            interiorService.Enter(
+                startInterior.ToString(),
+                playerInteriorReturnDummy.position
+            );
+        }
+
         private void Update()
         {
             if (inputService.ConsumeInteractPress())
             {
                 interactionSystem.TryInteract();
             }
+        }
+
+        private void OnFirstInteriorExit()
+        {
+            worldRoot.SetActive(true);
+            interiorService.OnExitInterior -= OnFirstInteriorExit;
         }
     }
 }
