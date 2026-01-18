@@ -164,7 +164,7 @@ namespace BTF.Game
                     gameContext
                 );
 
-            villagerBoatQuestView.Bind(villagerBoatQuestController);
+            villagerBoatQuestView.Bind(villagerBoatQuestController, gameContext);
 
             // ---------- UI ----------
             _ = new InventoryUIController(

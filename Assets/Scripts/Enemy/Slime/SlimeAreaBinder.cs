@@ -29,7 +29,7 @@ namespace BTF.Slime
 
             if (gearView != null)
             {
-                gearView.Bind(context.Inventory);
+                gearView.Bind(context.Inventory, context);
             }
         }
 

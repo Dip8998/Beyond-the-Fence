@@ -4,12 +4,24 @@ namespace BTF.UI.Quest
 {
     public sealed class QuestUIController
     {
+        private readonly QuestController questController;
+        private readonly QuestUIView view;
+
         public QuestUIController(
-            QuestController quest,
+            QuestController questController,
             QuestUIView view)
         {
-            quest.OnQuestChanged += view.Render;
-            view.Render(quest.CurrentQuest);
+            this.questController = questController;
+            this.view = view;
+
+            questController.OnQuestChanged += OnQuestChanged;
+
+            view.Render(questController.CurrentQuest);
+        }
+
+        private void OnQuestChanged(QuestModel quest)
+        {
+            view.Render(quest);
         }
     }
 }

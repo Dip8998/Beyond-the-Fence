@@ -53,10 +53,11 @@ namespace BTF.Quest
                         "Gather resources to help the villager.",
                         new List<QuestTask>
                         {
-                            new("Collect wood"),
-                            new("Find the gear"),
-                            new("Build the bridge"),
-                            new("Build the boat")
+                        new("Talk to the villager", visible: true), 
+                        new("Collect wood"), 
+                        new("Build the bridge"),
+                        new("Find the gear"),
+                        new("Build the boat")
                         }
                     )
                 },
@@ -84,10 +85,7 @@ namespace BTF.Quest
         {
             if (CurrentQuest.Tasks == null)
                 return;
-
-            var task = CurrentQuest.Tasks[index];
-            task.Complete();
-
+            CurrentQuest.CompleteTask(index);
             if (CurrentQuest.IsCompleted)
                 Advance();
 

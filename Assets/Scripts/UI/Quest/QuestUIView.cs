@@ -40,10 +40,13 @@ namespace BTF.UI.Quest
             {
                 foreach (var task in quest.Tasks)
                 {
+                    if (!task.Visible)
+                        continue;
+
                     var t = Instantiate(taskPrefab, taskRoot);
                     t.text = task.Completed
-                        ? $"✓ {task.Text}"
-                        : $"• {task.Text}";
+                        ? "[DONE] " + task.Text
+                        : "- " + task.Text;
                 }
             }
 

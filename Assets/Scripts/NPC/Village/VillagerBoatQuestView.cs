@@ -1,4 +1,5 @@
-﻿using BTF.Interfaces;
+﻿using BTF.Game;
+using BTF.Interfaces;
 using UnityEngine;
 
 namespace BTF.Villager
@@ -8,10 +9,12 @@ namespace BTF.Villager
         [SerializeField] private Transform bossIslandPoint;
 
         private VillagerBoatQuestController controller;
+        private GameContext gameContext;
 
-        public void Bind(VillagerBoatQuestController controller)
+        public void Bind(VillagerBoatQuestController controller, GameContext gameContext)
         {
             this.controller = controller;
+            this.gameContext = gameContext;
         }
 
         public void Interact()
@@ -23,6 +26,8 @@ namespace BTF.Villager
                 Debug.Log("Villager ignores you.");
                 return;
             }
+
+            gameContext.Quest.CompleteTask(0);
 
             controller.Interact(bossIslandPoint);
         }

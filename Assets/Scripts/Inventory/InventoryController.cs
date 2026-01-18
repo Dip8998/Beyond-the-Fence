@@ -42,7 +42,7 @@ namespace BTF.Inventory
 
             if (model.WoodCount >= 4)
             {
-                questController.Advance();
+                questController.CompleteTask(1);
             }
         }
 

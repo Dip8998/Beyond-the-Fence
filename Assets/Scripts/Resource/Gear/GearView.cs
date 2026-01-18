@@ -1,4 +1,5 @@
-﻿using BTF.Interfaces;
+﻿using BTF.Game;
+using BTF.Interfaces;
 using BTF.Inventory;
 using UnityEngine;
 
@@ -9,10 +10,12 @@ namespace BTF.Resource
         [SerializeField] private int gearAmount = 1;
 
         private InventoryController inventory;
+        private GameContext gameContext;
 
-        public void Bind(InventoryController inventory)
+        public void Bind(InventoryController inventory, GameContext gameContext)
         {
             this.inventory = inventory;
+            this.gameContext = gameContext;
         }
 
         public void Interact()
@@ -24,6 +27,7 @@ namespace BTF.Resource
             }
 
             inventory.AddGear(gearAmount);
+            gameContext.Quest.CompleteTask(3);
             gameObject.SetActive(false);
         }
     }

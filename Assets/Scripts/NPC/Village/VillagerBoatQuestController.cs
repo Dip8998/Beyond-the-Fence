@@ -66,6 +66,7 @@ namespace BTF.Villager
                 case VillagerBoatQuestState.BoatReady:
                     Debug.Log("Villager: Take the boat and save my son!");
                     model.Complete();
+                    gameContext.Quest.Advance();
                     break;
             }
         }
@@ -98,6 +99,7 @@ namespace BTF.Villager
                 }
 
                 bridgeController.Build();
+                gameContext.Quest.CompleteTask(2);
                 Debug.Log("Villager: The bridge is ready. Go to the slime island!");
                 return;
             }
