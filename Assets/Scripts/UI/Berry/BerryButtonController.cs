@@ -20,10 +20,19 @@ namespace BTF.UI
 
         public void UseBerry()
         {
+            if (player.GetCurrentHP() >= player.GetMaxHP())
+                return;
+
             if (!inventory.ConsumeBerry(1))
                 return;
 
             player.Heal(HEAL_AMOUNT);
+        }
+
+        public bool CanUseBerry()
+        {
+            return inventory.HasBerry(1) &&
+                   player.GetCurrentHP() < player.GetMaxHP();
         }
     }
 }

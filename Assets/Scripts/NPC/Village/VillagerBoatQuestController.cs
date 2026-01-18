@@ -16,6 +16,7 @@ namespace BTF.Villager
         private readonly BoatView boatPrefab;
         private readonly Transform boatSpawnPoint;
         private readonly BridgeController bridgeController;
+        private GameContext gameContext;
 
         public VillagerBoatQuestController(
             VillagerBoatQuestModel model,
@@ -23,7 +24,8 @@ namespace BTF.Villager
             PlayerController player,
             BoatView boatPrefab,
             Transform boatSpawnPoint,
-            BridgeController bridgeController)
+            BridgeController bridgeController,
+            GameContext gameContext)
         {
             this.model = model;
             this.inventory = inventory;
@@ -31,6 +33,7 @@ namespace BTF.Villager
             this.boatPrefab = boatPrefab;
             this.boatSpawnPoint = boatSpawnPoint;
             this.bridgeController = bridgeController;
+            this.gameContext = gameContext;
         }
 
         public VillagerBoatQuestState GetState() => model.State;
@@ -121,6 +124,7 @@ namespace BTF.Villager
 
             Debug.Log("Villager: The boat is ready!");
             model.BoatReady();
+            gameContext.Quest.Advance();
         }
     }
 }

@@ -18,6 +18,7 @@ namespace BTF.Boss
         public override void OnDeath()
         {
             Debug.Log("FINAL BOSS DEFEATED");
+            gameContext.Quest.Advance();
             if (villagerSon != null)
                 villagerSon.SetActive(true);
             base.OnDeath();

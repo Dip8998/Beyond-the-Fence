@@ -1,4 +1,5 @@
-﻿using BTF.Interfaces;
+﻿using BTF.Game;
+using BTF.Interfaces;
 using System;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace BTF.Enemy
         private Rigidbody2D rb;
         [NonSerialized]
         protected Animator animator;
+        protected GameContext gameContext;
         private int currentPatrolIndex;
 
         private Vector2 lastMoveDir = Vector2.down;
@@ -32,9 +34,10 @@ namespace BTF.Enemy
                 "[EnemyView] Patrol points not assigned");
         }
 
-        public void Bind(EnemyController controller)
+        public void Bind(EnemyController controller, GameContext gameContext)
         {
             this.controller = controller;
+            this.gameContext = gameContext;
             controller?.Bind(this);
         }
 

@@ -11,10 +11,12 @@ namespace BTF.Fence
         [SerializeField] private GameObject fenceVisual;
 
         private PlayerController player;
+        private GameContext gameContext;
 
-        public void Bind(PlayerController player)
+        public void Bind(PlayerController player, GameContext gameContext)
         {
             this.player = player;
+            this.gameContext = gameContext;
         }
 
         public void Interact()
@@ -34,6 +36,7 @@ namespace BTF.Fence
             GameProgress.IsFenceUnlocked = true;
             fenceCollider.enabled = false;
             fenceVisual.SetActive(false);
+            gameContext.Quest.Advance();
         }
     }
 }

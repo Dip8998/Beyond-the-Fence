@@ -11,11 +11,13 @@ namespace BTF.NPC
 
         private WeaponGiverController controller;
         private PlayerController player;
+        private GameContext context;
 
-        public void Bind(WeaponGiverController controller, PlayerController player)
+        public void Bind(WeaponGiverController controller, PlayerController player, GameContext gameContext)
         {
             this.controller = controller;
             this.player = player;
+            context = gameContext;
         }
 
         public void Interact()
@@ -29,7 +31,7 @@ namespace BTF.NPC
             if (!controller.HasGivenWeapon)
             {
                 Debug.Log($"{npcName}: Take this sword. You’ll need it.");
-                controller.GiveWeapon(player);
+                controller.GiveWeapon(player, context);
             }
             else
             {

@@ -11,7 +11,7 @@ namespace BTF.NPC
 
         public void Bind(GameContext context)
         {
-            view.Bind(context.SecondNeighbor, context.FirstNeighbor);
+            view.Bind(context.SecondNeighbor, context.FirstNeighbor,context);
         }
     }
 }

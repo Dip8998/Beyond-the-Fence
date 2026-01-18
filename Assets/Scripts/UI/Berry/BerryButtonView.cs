@@ -1,4 +1,5 @@
 ﻿using BTF.Inventory;
+using BTF.Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,16 +13,25 @@ namespace BTF.UI
 
         private BerryButtonController controller;
         private InventoryController inventory;
+        private PlayerController player;
 
         public void Bind(
             BerryButtonController controller,
-            InventoryController inventory)
+            InventoryController inventory,
+            PlayerController player)
         {
             this.controller = controller;
             this.inventory = inventory;
+            this.player = player;
 
+            button.onClick.RemoveAllListeners();
             button.onClick.AddListener(OnClick);
+
+            inventory.OnInventoryChanged -= Refresh;
             inventory.OnInventoryChanged += Refresh;
+
+            player.OnHealthChanged -= Refresh;
+            player.OnHealthChanged += Refresh;
 
             Refresh();
         }
@@ -34,20 +44,18 @@ namespace BTF.UI
         private void Refresh()
         {
             int count = inventory.GetBerryCount();
-
             countText.text = count.ToString();
 
-            if (count <= 0)
-            {
-                button.interactable = false;
-                gameObject.SetActive(false);
-            }
-            else
-            {
-                gameObject.SetActive(true);
-                button.interactable = true;
-            }
+            button.interactable = controller.CanUseBerry();
         }
 
+        private void OnDestroy()
+        {
+            if (inventory != null)
+                inventory.OnInventoryChanged -= Refresh;
+
+            if (player != null)
+                player.OnHealthChanged -= Refresh;
+        }
     }
 }

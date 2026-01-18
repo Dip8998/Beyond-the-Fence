@@ -4,6 +4,7 @@
     using BTF.FirstNB;
     using BTF.Inventory;
     using BTF.Player;
+    using BTF.Quest;
     using BTF.Scenes;
     using BTF.SeconNB;
 
@@ -15,6 +16,7 @@
         public EnemyController Boss { get; }
         public InteriorSceneService InteriorService { get; }
         public InventoryController Inventory { get; }
+        public QuestController Quest { get; }
 
         public GameContext(
             PlayerController player,
@@ -22,7 +24,9 @@
             SecondNeighborController secondNeighbor,
             EnemyController boss,
             InteriorSceneService interiorService,
-            InventoryController inventory)
+            InventoryController inventory,
+            QuestController quest
+            )
         {
             Player = player;
             FirstNeighbor = firstNeighbor;
@@ -30,6 +34,7 @@
             Boss = boss;
             InteriorService = interiorService;
             Inventory = inventory;
+            Quest = quest;
         }
 
     }

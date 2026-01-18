@@ -1,4 +1,5 @@
 ﻿using BTF.FirstNB;
+using BTF.Game;
 using BTF.Interfaces;
 using UnityEngine;
 
@@ -8,11 +9,13 @@ namespace BTF.SeconNB
     {
         private SecondNeighborController controller;
         private FirstNeighborController firstNeighbor;
+        private GameContext gameContext;
 
-        public void Bind(SecondNeighborController controller, FirstNeighborController firstNeighborController)
+        public void Bind(SecondNeighborController controller, FirstNeighborController firstNeighborController, GameContext gameContext)
         {
             this.controller = controller;
             firstNeighbor = firstNeighborController;
+            this.gameContext = gameContext;
         }
 
         public void Interact()
@@ -33,7 +36,8 @@ namespace BTF.SeconNB
 
                 case SecondNeighborState.Confessed:
                     Debug.Log("I’m sorry. I only wanted her to realize her mistake.");
-                    firstNeighbor.ResolveConflict();   
+                    firstNeighbor.ResolveConflict();
+                    gameContext.Quest.Advance();
                     break;
             }
         }

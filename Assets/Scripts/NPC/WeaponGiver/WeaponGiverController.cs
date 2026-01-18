@@ -1,4 +1,5 @@
-﻿using BTF.Player;
+﻿using BTF.Game;
+using BTF.Player;
 
 namespace BTF.NPC
 {
@@ -8,12 +9,13 @@ namespace BTF.NPC
 
         public bool HasGivenWeapon => weaponGiven;
 
-        public void GiveWeapon(PlayerController player)
+        public void GiveWeapon(PlayerController player, GameContext context)
         {
             if (weaponGiven) return;
 
             player.ReceiveWeapon();
             weaponGiven = true;
+            context.Quest.Advance();
         }
     }
 }

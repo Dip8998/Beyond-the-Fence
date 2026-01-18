@@ -1,16 +1,19 @@
-﻿using System;
+﻿using BTF.Game;
+using BTF.Quest;
+using System;
 
 namespace BTF.Inventory
 {
     public class InventoryController
     {
         private readonly InventoryModel model;
-
+        private QuestController questController;
         public event Action OnInventoryChanged;
 
-        public InventoryController(InventoryModel model)
+        public InventoryController(InventoryModel model, QuestController questController)
         {
             this.model = model;
+            this.questController = questController;
         }
 
         public int GetBerryCount() => model.BerryCount;
@@ -36,6 +39,11 @@ namespace BTF.Inventory
             model.AddWood(count);
             Notify();
             Log();
+
+            if (model.WoodCount >= 4)
+            {
+                questController.Advance();
+            }
         }
 
         public void AddBerry(int count)

@@ -16,6 +16,7 @@ using BTF.SeconNB;
 using BTF.UI;
 using BTF.UI.Health;
 using BTF.UI.Inventory;
+using BTF.UI.Quest;
 using BTF.Villager;
 using BTF.World;
 using UnityEngine;
@@ -30,10 +31,10 @@ namespace BTF.Game
         [SerializeField] private CameraFollow2D cameraFollow;
         [SerializeField] private InteractionDetector interactionDetector;
 
-        [Header("World Objects (Village Only)")]
+        [Header("World Objects")]
         [SerializeField] private EnemyView[] villageEnemies;
-        [SerializeField] private TreeView treeView;
-        [SerializeField] private BerryView berryView;
+        [SerializeField] private TreeView[] treeViews;
+        [SerializeField] private BerryView[] berryViews;
         [SerializeField] private WeaponGiverView weaponGiverView;
         [SerializeField] private FenceView fenceView;
         [SerializeField] private VillagerBoatQuestView villagerBoatQuestView;
@@ -54,98 +55,96 @@ namespace BTF.Game
         [SerializeField] private InventoryUIView inventoryUIView;
         [SerializeField] private PlayerHealthUIView playerHealthUIView;
         [SerializeField] private BerryButtonView berryButtonView;
+        [SerializeField] private QuestUIView questUIView;
 
         private PlayerController playerController;
         private InputService inputService;
         private InteractionSystem interactionSystem;
-
         private InventoryController inventoryController;
-
-        private EnemyController bossController;
-        private FirstNeighborController firstNeighborController;
-        private SecondNeighborController secondNeighborController;
-
-        private GameContext gameContext;
         private InteriorSceneService interiorService;
-
-        public InteriorSceneService InteriorService => interiorService;
+        private GameContext gameContext;
 
         private void Awake()
         {
             worldRoot.SetActive(false);
 
-            Debug.Assert(playerView != null, "PlayerView is NULL");
-            Debug.Assert(inputProvider != null, "InputProvider is NULL");
-            Debug.Assert(cameraFollow != null, "CameraFollow2D is NULL");
-            Debug.Assert(interactionDetector != null, "InteractionDetector is NULL");
-
+            // ---------- INPUT ----------
             inputService = new InputService();
             inputProvider.Bind(inputService);
 
+            // ---------- PLAYER ----------
             var playerModel = new PlayerModel(100, 5f);
             playerController = new PlayerController(playerModel, inputService);
             playerView.Bind(playerController);
             cameraFollow.SetTarget(playerView.transform);
 
+            // ---------- INTERACTION ----------
             interactionSystem = new InteractionSystem();
             interactionDetector.Bind(interactionSystem);
 
+            // ---------- QUEST ----------
+            var questController = new QuestController();
+            new QuestUIController(questController, questUIView);
+
+            // ---------- INVENTORY ----------
             var inventoryModel = new InventoryModel();
-            inventoryController = new InventoryController(inventoryModel);
+            inventoryController = new InventoryController(inventoryModel, questController);
 
-            var treeModel = new TreeModel(5);
-            var treeController = new TreeController(treeModel, inventoryController);
-            treeView.Bind(treeController);
+            // ---------- GAME CONTEXT ----------
+            var firstNeighborController =
+                new FirstNeighborController(new FirstNeighborModel());
 
-            var berryModel = new BerryModel();
-            var berryController = new BerryController(berryModel, inventoryController);
-            berryView.Bind(berryController);
+            var secondNeighborController =
+                new SecondNeighborController(new SecondNeighborModel());
 
-            var inventoryUIModel = new InventoryUIModel();
-            var inventoryUIController = new InventoryUIController(
-                inventoryUIModel,
-                inventoryUIView,
-                inventoryController
+            interiorService = new InteriorSceneService(
+                playerController,
+                playerView,
+                null
             );
 
-            var healthUIModel = new PlayerHealthUIModel();
-            var healthUIController = new PlayerHealthUIController(
-                healthUIModel,
-                playerHealthUIView,
-                playerController
+            gameContext = new GameContext(
+                playerController,
+                firstNeighborController,
+                secondNeighborController,
+                boss: null,
+                interiorService,
+                inventoryController,
+                questController
             );
 
-            var berryButtonController =
-                new BerryButtonController(inventoryController, playerController);
+            interiorService.SetContext(gameContext);
 
-            berryButtonView.Bind(berryButtonController, inventoryController);
+            // ---------- WORLD OBJECTS ----------
+            foreach (var treeView in treeViews)
+            {
+                var treeController =
+                    new TreeController(new TreeModel(5), inventoryController);
+                treeView.Bind(treeController);
+            }
+
+            foreach (var berryView in berryViews)
+            {
+                var berryController =
+                    new BerryController(new BerryModel(), inventoryController);
+                berryView.Bind(berryController);
+            }
 
             foreach (var enemyView in villageEnemies)
             {
-                var model = new EnemyModel(
-                    moveSpeed: 2f,
-                    chaseSpeed: 3f,
-                    maxHP: 10
-                );
+                var enemyController =
+                    new EnemyController(new EnemyModel(2f, 3f, 10));
 
-                var controller = new EnemyController(model);
-
-                enemyView.Bind(controller);
+                enemyView.Bind(enemyController, gameContext);
 
                 var detection = enemyView.GetComponentInChildren<EnemyDetection>();
-                detection.Bind(playerView.transform, controller);
+                detection.Bind(playerView.transform, enemyController);
             }
 
-            var firstNeighborModel = new FirstNeighborModel();
-            firstNeighborController = new FirstNeighborController(firstNeighborModel);
-
-            var secondNeighborModel = new SecondNeighborModel();
-            secondNeighborController = new SecondNeighborController(secondNeighborModel);
-
-            fenceView.Bind(playerController);
+            fenceView.Bind(playerController, gameContext);
 
             var weaponGiverController = new WeaponGiverController();
-            weaponGiverView.Bind(weaponGiverController, playerController);
+            weaponGiverView.Bind(weaponGiverController, playerController, gameContext);
 
             var bridgeController = new BridgeController(
                 inventoryController,
@@ -154,35 +153,42 @@ namespace BTF.Game
                 requiredWood: 20
             );
 
-            var villagerBoatQuestModel = new VillagerBoatQuestModel(4, 10, 1);
-            var villagerBoatQuestController = new VillagerBoatQuestController(
-                villagerBoatQuestModel,
-                inventoryController,
-                playerController,
-                boatView,
-                boatPosition,
-                bridgeController
-            );
+            var villagerBoatQuestController =
+                new VillagerBoatQuestController(
+                    new VillagerBoatQuestModel(4, 10, 1),
+                    inventoryController,
+                    playerController,
+                    boatView,
+                    boatPosition,
+                    bridgeController,
+                    gameContext
+                );
+
             villagerBoatQuestView.Bind(villagerBoatQuestController);
 
-            interiorService = new InteriorSceneService(
-                playerController,
-                playerView,
-                null // temporary
-            );
-
-            gameContext = new GameContext(
-                playerController,
-                firstNeighborController,
-                secondNeighborController,
-                bossController,
-                interiorService,
+            // ---------- UI ----------
+            _ = new InventoryUIController(
+                new InventoryUIModel(),
+                inventoryUIView,
                 inventoryController
             );
 
-            interiorService.SetContext(gameContext);
+            _ = new PlayerHealthUIController(
+                new PlayerHealthUIModel(),
+                playerHealthUIView,
+                playerController
+            );
 
+            var berryButtonController =
+                new BerryButtonController(inventoryController, playerController);
 
+            berryButtonView.Bind(
+                berryButtonController,
+                inventoryController,
+                playerController
+            );
+
+            // ---------- INTERIORS ----------
             foreach (var entrance in interiorEntrances)
             {
                 entrance.Bind(interiorService);

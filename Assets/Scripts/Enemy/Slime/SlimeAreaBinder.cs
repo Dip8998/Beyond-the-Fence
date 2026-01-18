@@ -43,7 +43,7 @@ namespace BTF.Slime
             var model = new EnemyModel(moveSpeed, chaseSpeed, hp);
             var controller = new EnemyController(model);
 
-            view.Bind(controller);
+            view.Bind(controller, context);
 
             var detection = view.GetComponentInChildren<EnemyDetection>();
             detection.Bind(context.Player.View.transform, controller);
