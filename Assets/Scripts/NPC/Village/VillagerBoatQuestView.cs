@@ -1,35 +1,46 @@
-﻿using BTF.Game;
+﻿using BTF.Dialogue;
+using BTF.Game;
 using BTF.Interfaces;
 using UnityEngine;
 
 namespace BTF.Villager
 {
-    public class VillagerBoatQuestView : MonoBehaviour, IInteractable
+    public sealed class VillagerBoatQuestView : MonoBehaviour, IInteractable
     {
         [SerializeField] private Transform bossIslandPoint;
 
         private VillagerBoatQuestController controller;
-        private GameContext gameContext;
+        private GameContext context;
+        private VillagerDialogue dialogue;
 
-        public void Bind(VillagerBoatQuestController controller, GameContext gameContext)
+        public void Bind(
+            VillagerBoatQuestController controller,
+            GameContext context)
         {
             this.controller = controller;
-            this.gameContext = gameContext;
+            this.context = context;
+
+            dialogue = new VillagerDialogue();
         }
 
         public void Interact()
         {
+            if (context.DialogueController.IsPlaying)
+                return;
+
             controller.TryActivate();
 
             if (controller.GetState() == VillagerBoatQuestState.Inactive)
-            {
-                Debug.Log("Villager ignores you.");
                 return;
-            }
 
-            gameContext.Quest.CompleteTask(0);
-
-            controller.Interact(bossIslandPoint);
+            context.DialogueController.StartDialogue(
+                context.DialogueRunner.Run(dialogue),
+                () =>
+                {
+                    context.Quest.CompleteTask(0);
+                    controller.Interact(bossIslandPoint);
+                }
+            );
         }
     }
 }

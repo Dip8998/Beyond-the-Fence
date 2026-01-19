@@ -1,42 +1,46 @@
-﻿using BTF.Game;
+﻿using BTF.Dialogue;
+using BTF.Game;
 using BTF.Interfaces;
 using BTF.Player;
 using UnityEngine;
 
 namespace BTF.NPC
 {
-    public class WeaponGiverView : MonoBehaviour, IInteractable
+    public sealed class WeaponGiverView : MonoBehaviour, IInteractable
     {
-        [SerializeField] private string npcName = "Blacksmith";
-
         private WeaponGiverController controller;
         private PlayerController player;
         private GameContext context;
+        private OldManDialogue dialogue;
 
-        public void Bind(WeaponGiverController controller, PlayerController player, GameContext gameContext)
+        public void Bind(
+            WeaponGiverController controller,
+            PlayerController player,
+            GameContext context)
         {
             this.controller = controller;
             this.player = player;
-            context = gameContext;
+            this.context = context;
+
+            dialogue = new OldManDialogue();
         }
 
         public void Interact()
         {
-            if (!GameProgress.IsFenceUnlocked)
-            {
-                Debug.Log($"{npcName}: It’s too dangerous outside. Come back after the fence is unlocked.");
+            if (context.DialogueController.IsPlaying)
                 return;
-            }
 
-            if (!controller.HasGivenWeapon)
-            {
-                Debug.Log($"{npcName}: Take this sword. You’ll need it.");
-                controller.GiveWeapon(player, context);
-            }
-            else
-            {
-                Debug.Log($"{npcName}: I can upgrade your weapon later.");
-            }
+            context.DialogueController.StartDialogue(
+                context.DialogueRunner.Run(dialogue),
+                () =>
+                {
+                    if (!GameProgress.IsFenceUnlocked)
+                        return;
+
+                    if (!controller.HasGivenWeapon)
+                        controller.GiveWeapon(player, context);
+                }
+            );
         }
     }
 }

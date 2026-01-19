@@ -1,5 +1,6 @@
 ﻿using BTF.Boat;
 using BTF.Camera;
+using BTF.Dialogue;
 using BTF.Enemy;
 using BTF.Fence;
 using BTF.FirstNB;
@@ -56,6 +57,7 @@ namespace BTF.Game
         [SerializeField] private PlayerHealthUIView playerHealthUIView;
         [SerializeField] private BerryButtonView berryButtonView;
         [SerializeField] private QuestUIView questUIView;
+        [SerializeField] private DialogueUIView dialogueUIView;
 
         private PlayerController playerController;
         private InputService inputService;
@@ -86,6 +88,16 @@ namespace BTF.Game
             var questController = new QuestController();
             new QuestUIController(questController, questUIView);
 
+            // ---------- DIALOGUE ----------
+            var dialogueContext =
+                new DialogueContext(questController, gameContext);
+
+            var dialogueRunner =
+                new DialogueRunner(dialogueContext);
+
+            var dialogueController =
+                new DialogueController(dialogueUIView);
+
             // ---------- INVENTORY ----------
             var inventoryModel = new InventoryModel();
             inventoryController = new InventoryController(inventoryModel, questController);
@@ -110,7 +122,9 @@ namespace BTF.Game
                 boss: null,
                 interiorService,
                 inventoryController,
-                questController
+                questController,
+                dialogueRunner,
+                dialogueController  
             );
 
             interiorService.SetContext(gameContext);

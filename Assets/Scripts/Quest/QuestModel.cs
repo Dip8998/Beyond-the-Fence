@@ -25,6 +25,20 @@ namespace BTF.Quest
         public bool IsCompleted =>
             Tasks == null || Tasks.TrueForAll(t => t.Completed);
 
+        public QuestTask GetCurrentTask()
+        {
+            if (Tasks == null)
+                return null;
+
+            foreach (var task in Tasks)
+            {
+                if (task.Visible && !task.Completed)
+                    return task;
+            }
+
+            return null;
+        }
+
         public void RevealTask(int index)
         {
             if (Tasks == null || index < 0 || index >= Tasks.Count)

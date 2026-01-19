@@ -1,38 +1,44 @@
-﻿using BTF.Game;
+﻿using BTF.Dialogue;
+using BTF.Game;
 using BTF.Interfaces;
 using BTF.Player;
 using UnityEngine;
 
 namespace BTF.FirstNB
 {
-    public class FirstNeighborView : MonoBehaviour, IInteractable
+    public sealed class FirstNeighborView : MonoBehaviour, IInteractable
     {
         private FirstNeighborController controller;
-        private PlayerController playerController;
+        private PlayerController player;
+        private GameContext context;
+        private FirstNeighborDialogue dialogue;
 
-        public void Bind(FirstNeighborController controller, PlayerController playerController)
+        public void Bind(
+            FirstNeighborController controller,
+            PlayerController player,
+            GameContext context)
         {
             this.controller = controller;
-            this.playerController = playerController;
+            this.player = player;
+            this.context = context;
+
+            dialogue = new FirstNeighborDialogue();
         }
 
         public void Interact()
         {
-            switch (controller.GetState())
+            context.DialogueController.StartDialogue(
+                context.DialogueRunner.Run(dialogue)
+            );
+
+            if (controller.GetState() == FirstNeighborState.Idle)
             {
-                case FirstNeighborState.Idle:
-                    Debug.Log("Please help me find my jewelry box...");
-                    controller.OnPlayerInteract();
-                    break;
+                controller.OnPlayerInteract();
+            }
 
-                case FirstNeighborState.AskedForHelp:
-                    Debug.Log("Did you find my jewelry box?");
-                    break;
-
-                case FirstNeighborState.ConflictResolved:
-                    Debug.Log("Thank you! Take this key and unlock the fence.");
-                    controller.GiveKey(playerController);
-                    break;
+            if (controller.GetState() == FirstNeighborState.ConflictResolved)
+            {
+                controller.GiveKey(player);
             }
         }
     }
