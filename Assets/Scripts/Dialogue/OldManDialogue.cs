@@ -13,19 +13,24 @@ namespace BTF.Dialogue
             {
                 yield return new DialogueLine(
                     "Old Man",
-                    "Stay sharp out there."
+                    "You’re still breathing. That’s good."
                 );
                 yield break;
             }
 
             yield return new DialogueLine(
                 "Old Man",
-                "Beyond the fence, nothing is forgiving."
+                "Beyond the fence, the world does not forgive mistakes."
             );
 
             yield return new DialogueLine(
                 "Old Man",
-                "Take this blade. You’ll need it."
+                "Take this blade. It won’t protect you — skill will."
+            );
+
+            yield return new DialogueLine(
+                "Old Man",
+                "Press K to strike. Hesitation will get you killed."
             );
         }
     }

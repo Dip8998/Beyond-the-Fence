@@ -19,17 +19,15 @@ namespace BTF.Dialogue
 
         public IEnumerable<DialogueLine> Resolve(DialogueContext context)
         {
-            // 🔒 Once confessed, NEVER fall back
             if (secondNeighbor.GetState() == SecondNeighborState.Confessed)
             {
                 yield return new DialogueLine(
                     "Neighbor",
-                    "I’m sorry. I’ve already confessed."
+                    "I’ve already confessed. I can’t undo it."
                 );
                 yield break;
             }
 
-            // Only gate BEFORE confession
             bool asked =
                 firstNeighbor.GetState() == FirstNeighborState.AskedForHelp;
 
@@ -37,7 +35,7 @@ namespace BTF.Dialogue
             {
                 yield return new DialogueLine(
                     "Neighbor",
-                    "I don’t want to talk."
+                    "I don’t want to talk. Leave me alone."
                 );
                 yield break;
             }
@@ -54,7 +52,11 @@ namespace BTF.Dialogue
                 case SecondNeighborState.Lying:
                     yield return new DialogueLine(
                         "Neighbor",
-                        "Alright… I took it. I was angry."
+                        "Alright… I took it."
+                    );
+                    yield return new DialogueLine(
+                        "Neighbor",
+                        "I was angry. I wanted her to feel ignored too."
                     );
                     break;
             }

@@ -19,7 +19,6 @@ namespace BTF.Villager
         {
             this.controller = controller;
             this.context = context;
-
             dialogue = new VillagerDialogue();
         }
 
@@ -35,12 +34,14 @@ namespace BTF.Villager
 
             context.DialogueController.StartDialogue(
                 context.DialogueRunner.Run(dialogue),
-                () =>
-                {
-                    context.Quest.CompleteTask(0);
-                    controller.Interact(bossIslandPoint);
-                }
+                OnDialogueFinished
             );
         }
+
+        private void OnDialogueFinished()
+        {
+            controller.TryProgress(bossIslandPoint);
+        }
+
     }
 }

@@ -80,10 +80,6 @@ namespace BTF.Game
             playerView.Bind(playerController);
             cameraFollow.SetTarget(playerView.transform);
 
-            // ---------- INTERACTION ----------
-            interactionSystem = new InteractionSystem();
-            interactionDetector.Bind(interactionSystem);
-
             // ---------- QUEST ----------
             var questController = new QuestController();
             new QuestUIController(questController, questUIView);
@@ -96,7 +92,7 @@ namespace BTF.Game
                 new DialogueRunner(dialogueContext);
 
             var dialogueController =
-                new DialogueController(dialogueUIView);
+                new DialogueController(dialogueUIView, playerController);
 
             // ---------- INVENTORY ----------
             var inventoryModel = new InventoryModel();
@@ -128,6 +124,11 @@ namespace BTF.Game
             );
 
             interiorService.SetContext(gameContext);
+
+
+            // ---------- INTERACTION ----------
+            interactionSystem = new InteractionSystem(gameContext);
+            interactionDetector.Bind(interactionSystem);
 
             // ---------- WORLD OBJECTS ----------
             foreach (var treeView in treeViews)

@@ -7,16 +7,15 @@ using UnityEngine;
 
 namespace BTF.Villager
 {
-    public class VillagerBoatQuestController
+    public sealed class VillagerBoatQuestController
     {
         private readonly VillagerBoatQuestModel model;
         private readonly InventoryController inventory;
         private readonly PlayerController player;
-
         private readonly BoatView boatPrefab;
         private readonly Transform boatSpawnPoint;
         private readonly BridgeController bridgeController;
-        private GameContext gameContext;
+        private readonly GameContext context;
 
         public VillagerBoatQuestController(
             VillagerBoatQuestModel model,
@@ -25,7 +24,7 @@ namespace BTF.Villager
             BoatView boatPrefab,
             Transform boatSpawnPoint,
             BridgeController bridgeController,
-            GameContext gameContext)
+            GameContext context)
         {
             this.model = model;
             this.inventory = inventory;
@@ -33,7 +32,7 @@ namespace BTF.Villager
             this.boatPrefab = boatPrefab;
             this.boatSpawnPoint = boatSpawnPoint;
             this.bridgeController = bridgeController;
-            this.gameContext = gameContext;
+            this.context = context;
         }
 
         public VillagerBoatQuestState GetState() => model.State;
@@ -44,78 +43,51 @@ namespace BTF.Villager
                 return;
 
             if (model.State == VillagerBoatQuestState.Inactive)
-            {
                 model.Activate();
-                Debug.Log("Villager: My son was taken...");
-            }
         }
 
-        public void Interact(Transform bossIslandPoint)
+        public void TryProgress(Transform bossIslandPoint)
         {
-            switch (model.State)
+            if (model.State == VillagerBoatQuestState.Active)
             {
-                case VillagerBoatQuestState.Active:
-                    Debug.Log("Villager: My son was taken! Bring me 10 wood.");
-                    model.StartQuest();
-                    break;
-
-                case VillagerBoatQuestState.InProgress:
-                    HandleProgress(bossIslandPoint);
-                    break;
-
-                case VillagerBoatQuestState.BoatReady:
-                    Debug.Log("Villager: Take the boat and save my son!");
-                    model.Complete();
-                    gameContext.Quest.Advance();
-                    break;
+                model.StartQuest();
+                context.Quest.CompleteTask(0); 
+                return;
             }
-        }
 
-        private void HandleProgress(Transform bossIslandPoint)
-        {
+            if (model.State != VillagerBoatQuestState.InProgress)
+                return;
+
             if (!model.HasRealizedGear)
             {
-                if (!inventory.HasWood(model.RequiredBoatWood))
+                if (inventory.HasWood(model.RequiredBoatWood))
                 {
-                    Debug.Log("Villager: I need 10 wood to build the boat.");
-                    return;
+                    inventory.ConsumeWood(model.RequiredBoatWood);
+                    model.RealizeGear();
+                    context.Quest.CompleteTask(1); 
                 }
-
-                inventory.ConsumeWood(model.RequiredBoatWood);
-                model.RealizeGear();
-
-                Debug.Log("Villager: Wait… I forgot something. The boat needs gear.");
-                Debug.Log("Villager: We need a bridge to reach the slime island.");
-
                 return;
             }
 
             if (!bridgeController.IsBuilt)
             {
-                if (!inventory.HasWood(model.RequiredBridgeWood))
+                if (inventory.HasWood(model.RequiredBridgeWood))
                 {
-                    Debug.Log("Villager: Bring 20 wood to build the bridge.");
-                    return;
+                    inventory.ConsumeWood(model.RequiredBridgeWood); 
+                    bridgeController.Build();
+                    context.Quest.CompleteTask(2);
                 }
-
-                bridgeController.Build();
-                gameContext.Quest.CompleteTask(2);
-                Debug.Log("Villager: The bridge is ready. Go to the slime island!");
                 return;
             }
 
-            TryBuildBoat(bossIslandPoint);
+            if (inventory.HasGear(model.RequiredGear))
+            {
+                BuildBoat(bossIslandPoint);
+            }
         }
 
-
-        private void TryBuildBoat(Transform bossIslandPoint)
+        private void BuildBoat(Transform bossIslandPoint)
         {
-            if (!inventory.HasGear(model.RequiredGear))
-            {
-                Debug.Log("Villager: You still need the gear from the slime boss.");
-                return;
-            }
-
             BoatView boat = Object.Instantiate(
                 boatPrefab,
                 boatSpawnPoint.position,
@@ -124,9 +96,8 @@ namespace BTF.Villager
 
             boat.Bind(player, bossIslandPoint);
 
-            Debug.Log("Villager: The boat is ready!");
             model.BoatReady();
-            gameContext.Quest.Advance();
+            context.Quest.CompleteTask(4); 
         }
     }
 }

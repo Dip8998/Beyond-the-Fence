@@ -6,6 +6,12 @@ namespace BTF.Interaction
     public sealed class InteractionSystem
     {
         private readonly List<IInteractable> interactables = new();
+        private readonly BTF.Game.GameContext context;
+
+        public InteractionSystem(BTF.Game.GameContext context)
+        {
+            this.context = context;
+        }
 
         public void AddInteractables(IInteractable interactable)
         {
@@ -22,7 +28,11 @@ namespace BTF.Interaction
 
         public void TryInteract()
         {
-            if(interactables.Count == 0) return;
+            if (context.Player.IsMovementLocked)
+                return;
+
+            if (interactables.Count == 0)
+                return;
 
             interactables[0].Interact();
         }

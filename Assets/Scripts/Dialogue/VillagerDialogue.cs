@@ -13,52 +13,61 @@ namespace BTF.Dialogue
             {
                 yield return new DialogueLine(
                     "Villager",
-                    "Thank you again… my son is safe now."
+                    "Because of you… my son is alive."
                 );
                 yield break;
             }
 
             var task = quest.GetCurrentTask();
-            if (task == null) yield break;
+            if (task == null)
+                yield break;
 
             switch (task.Text)
             {
                 case "Talk to the villager":
                     yield return new DialogueLine(
                         "Villager",
-                        "My son was taken by a monster across the sea."
+                        "Please… my son was taken across the sea."
                     );
                     yield return new DialogueLine(
                         "Villager",
-                        "I need a boat… but I don’t have the materials."
+                        "I need a boat… but I have nothing."
                     );
                     break;
 
                 case "Collect wood":
                     yield return new DialogueLine(
                         "Villager",
-                        "Bring me wood. I’ll begin the work."
+                        "Bring me 10 wood. I can start building."
                     );
                     break;
 
                 case "Build the bridge":
                     yield return new DialogueLine(
                         "Villager",
-                        "The slime land is blocked. We need a bridge."
+                        "The slime land blocks the way."
+                    );
+                    yield return new DialogueLine(
+                        "Villager",
+                        "Cut 10 wooden sticks. We need a bridge."
                     );
                     break;
 
                 case "Find the gear":
                     yield return new DialogueLine(
                         "Villager",
-                        "The slime boss carries a vital gear."
+                        "The slime boss carries a gear."
+                    );
+                    yield return new DialogueLine(
+                        "Villager",
+                        "Without it, the boat will break apart."
                     );
                     break;
 
                 case "Build the boat":
                     yield return new DialogueLine(
                         "Villager",
-                        "That’s everything. I’ll finish the boat."
+                        "That’s everything… I’ll finish the boat now."
                     );
                     break;
             }

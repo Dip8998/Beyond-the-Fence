@@ -22,7 +22,7 @@ namespace BTF.FirstNB
             this.player = player;
             this.context = context;
 
-            dialogue = new FirstNeighborDialogue();
+            dialogue = new FirstNeighborDialogue(controller);
         }
 
         public void Interact()

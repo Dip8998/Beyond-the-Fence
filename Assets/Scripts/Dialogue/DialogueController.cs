@@ -1,29 +1,39 @@
-﻿using System.Collections.Generic;
+﻿using BTF.Player;
+using System.Collections.Generic;
 
 namespace BTF.Dialogue
 {
     public sealed class DialogueController
     {
         private readonly DialogueUIView view;
+        private readonly PlayerController player;
+
         private IEnumerator<DialogueLine> enumerator;
-        private System.Action onFinished;
+        private System.Action onFinish;
 
         public bool IsPlaying { get; private set; }
 
-        public DialogueController(DialogueUIView view)
+        public DialogueController(
+            DialogueUIView view,
+            PlayerController player)
         {
             this.view = view;
+            this.player = player;
         }
 
         public void StartDialogue(
             IEnumerable<DialogueLine> dialogue,
-            System.Action onFinished = null)
+            System.Action onFinish = null)
         {
-            if (IsPlaying) return;
+            if (IsPlaying)
+                return;
 
-            this.onFinished = onFinished;
-            enumerator = dialogue.GetEnumerator();
             IsPlaying = true;
+            this.onFinish = onFinish;
+
+            player.LockMovement(); 
+
+            enumerator = dialogue.GetEnumerator();
             ShowNext();
         }
 
@@ -31,15 +41,21 @@ namespace BTF.Dialogue
         {
             if (!enumerator.MoveNext())
             {
-                IsPlaying = false;
-                view.Hide();
-                onFinished?.Invoke();
+                EndDialogue();
                 return;
             }
 
             var line = enumerator.Current;
             view.Show(line.Speaker, line.Text, ShowNext);
         }
-    }
 
+        private void EndDialogue()
+        {
+            IsPlaying = false;
+            view.Hide();
+
+            player.UnlockMovement(); 
+            onFinish?.Invoke();
+        }
+    }
 }
