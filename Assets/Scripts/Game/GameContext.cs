@@ -1,6 +1,7 @@
 ﻿namespace BTF.Game
 {
     using BTF.Dialogue;
+    using BTF.Discovery;
     using BTF.Enemy;
     using BTF.FirstNB;
     using BTF.Inventory;
@@ -20,6 +21,7 @@
         public QuestController Quest { get; }
         public DialogueRunner DialogueRunner { get; }
         public DialogueController DialogueController { get; }
+        public DiscoveryController Discovery { get; }
 
         public GameContext(
             PlayerController player,
@@ -30,7 +32,8 @@
             InventoryController inventory,
             QuestController quest,
             DialogueRunner dialogueRunner,
-            DialogueController dialogueController)
+            DialogueController dialogueController,
+            DiscoveryController discoveryController)
         {
             Player = player;
             FirstNeighbor = firstNeighbor;
@@ -41,6 +44,7 @@
             Quest = quest;
             DialogueRunner = dialogueRunner;
             DialogueController = dialogueController;
+            Discovery = discoveryController;
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using BTF.Boat;
 using BTF.Camera;
 using BTF.Dialogue;
+using BTF.Discovery;
 using BTF.Enemy;
 using BTF.Fence;
 using BTF.FirstNB;
@@ -43,6 +44,7 @@ namespace BTF.Game
         [SerializeField] private Transform boatPosition;
         [SerializeField] private GameObject slimeBridge;
         [SerializeField] private GameObject bridgeBlocker;
+        [SerializeField] private BridgeInteraction bridgeInteraction;
 
         [Header("Interiors")]
         [SerializeField] private InteriorEntrance[] interiorEntrances;
@@ -58,6 +60,7 @@ namespace BTF.Game
         [SerializeField] private BerryButtonView berryButtonView;
         [SerializeField] private QuestUIView questUIView;
         [SerializeField] private DialogueUIView dialogueUIView;
+        [SerializeField] private DiscoveryUIView discoveryUIView;
 
         private PlayerController playerController;
         private InputService inputService;
@@ -111,6 +114,10 @@ namespace BTF.Game
                 null
             );
 
+            var discoveryModel = new DiscoveryModel();
+            var discoveryController =
+                new DiscoveryController(discoveryModel, discoveryUIView);
+
             gameContext = new GameContext(
                 playerController,
                 firstNeighborController,
@@ -120,7 +127,8 @@ namespace BTF.Game
                 inventoryController,
                 questController,
                 dialogueRunner,
-                dialogueController  
+                dialogueController,
+                discoveryController
             );
 
             interiorService.SetContext(gameContext);
@@ -142,7 +150,7 @@ namespace BTF.Game
             {
                 var berryController =
                     new BerryController(new BerryModel(), inventoryController);
-                berryView.Bind(berryController);
+                berryView.Bind(berryController, gameContext);
             }
 
             foreach (var enemyView in villageEnemies)
@@ -202,6 +210,8 @@ namespace BTF.Game
                 inventoryController,
                 playerController
             );
+
+            bridgeInteraction.Bind(gameContext);
 
             // ---------- INTERIORS ----------
             foreach (var entrance in interiorEntrances)

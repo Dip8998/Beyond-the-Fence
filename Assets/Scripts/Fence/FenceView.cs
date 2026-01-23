@@ -23,7 +23,7 @@ namespace BTF.Fence
         {
             if (!player.HasFenceKey())
             {
-                Debug.Log("Fence is locked.");
+                gameContext.Discovery.Notify("The fence is locked");
                 return;
             }
 

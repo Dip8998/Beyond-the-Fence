@@ -1,4 +1,5 @@
 ﻿using BTF.Dialogue;
+using BTF.Discovery;
 using BTF.Game;
 using BTF.Interfaces;
 using BTF.Player;
@@ -39,6 +40,8 @@ namespace BTF.NPC
 
                     if (!controller.HasGivenWeapon)
                         controller.GiveWeapon(player, context);
+
+                    context.Discovery.TryDiscover(DiscoverableItem.Sword);
                 }
             );
         }

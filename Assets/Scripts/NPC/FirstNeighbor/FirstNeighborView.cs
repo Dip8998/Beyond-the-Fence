@@ -1,4 +1,5 @@
 ﻿using BTF.Dialogue;
+using BTF.Discovery;
 using BTF.Game;
 using BTF.Interfaces;
 using BTF.Player;
@@ -28,18 +29,20 @@ namespace BTF.FirstNB
         public void Interact()
         {
             context.DialogueController.StartDialogue(
-                context.DialogueRunner.Run(dialogue)
-            );
+               context.DialogueRunner.Run(dialogue),
+               () =>
+               {
+                   if (controller.GetState() == FirstNeighborState.Idle)
+                   {
+                       controller.OnPlayerInteract();
+                   }
 
-            if (controller.GetState() == FirstNeighborState.Idle)
-            {
-                controller.OnPlayerInteract();
-            }
-
-            if (controller.GetState() == FirstNeighborState.ConflictResolved)
-            {
-                controller.GiveKey(player);
-            }
+                   if (controller.GetState() == FirstNeighborState.ConflictResolved)
+                   {
+                       controller.GiveKey(player);
+                       context.Discovery.TryDiscover(DiscoverableItem.FenceKey);
+                   }
+               });
         }
     }
 }

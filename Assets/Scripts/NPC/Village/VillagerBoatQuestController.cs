@@ -48,13 +48,6 @@ namespace BTF.Villager
 
         public void TryProgress(Transform bossIslandPoint)
         {
-            if (model.State == VillagerBoatQuestState.Active)
-            {
-                model.StartQuest();
-                context.Quest.CompleteTask(0); 
-                return;
-            }
-
             if (model.State != VillagerBoatQuestState.InProgress)
                 return;
 
@@ -73,15 +66,16 @@ namespace BTF.Villager
             {
                 if (inventory.HasWood(model.RequiredBridgeWood))
                 {
-                    inventory.ConsumeWood(model.RequiredBridgeWood); 
+                    inventory.ConsumeWood(model.RequiredBridgeWood);
                     bridgeController.Build();
-                    context.Quest.CompleteTask(2);
+                    context.Quest.CompleteTask(2); 
                 }
                 return;
             }
 
             if (inventory.HasGear(model.RequiredGear))
             {
+                context.Quest.CompleteTask(3); 
                 BuildBoat(bossIslandPoint);
             }
         }
@@ -98,6 +92,15 @@ namespace BTF.Villager
 
             model.BoatReady();
             context.Quest.CompleteTask(4); 
+        }
+
+        public void OnFirstConversationFinished()
+        {
+            if (model.State != VillagerBoatQuestState.Active)
+                return;
+
+            model.StartQuest();
+            context.Quest.CompleteTask(0);
         }
     }
 }

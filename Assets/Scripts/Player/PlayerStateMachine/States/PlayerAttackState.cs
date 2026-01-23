@@ -11,6 +11,7 @@ public class PlayerAttackState : IState<PlayerController>
     public void OnStateEnter()
     {
         owner.IsAttacking = true;
+        owner.LockMovement(); 
         owner.StopMovement();
         owner.View.PlayAttackAnimation();
     }
@@ -18,6 +19,7 @@ public class PlayerAttackState : IState<PlayerController>
     public void OnStateExit()
     {
         owner.IsAttacking = false;
+        owner.UnlockMovement(); 
     }
 
     public void Update()
@@ -30,3 +32,4 @@ public class PlayerAttackState : IState<PlayerController>
         }
     }
 }
+

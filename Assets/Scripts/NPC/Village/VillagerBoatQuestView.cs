@@ -40,6 +40,12 @@ namespace BTF.Villager
 
         private void OnDialogueFinished()
         {
+            if (context.Quest.CurrentQuest.GetCurrentTask()?.Text == "Talk to the villager")
+            {
+                controller.OnFirstConversationFinished();
+                return;
+            }
+
             controller.TryProgress(bossIslandPoint);
         }
 

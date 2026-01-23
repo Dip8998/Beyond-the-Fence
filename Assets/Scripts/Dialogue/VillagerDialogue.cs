@@ -13,7 +13,7 @@ namespace BTF.Dialogue
             {
                 yield return new DialogueLine(
                     "Villager",
-                    "Because of you… my son is alive."
+                    "Please… if you find anyone outside the fence… tell them to be careful."
                 );
                 yield break;
             }
