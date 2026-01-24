@@ -6,6 +6,7 @@ using BTF.Enemy;
 using BTF.Fence;
 using BTF.FirstNB;
 using BTF.Game;
+using BTF.Guidance;
 using BTF.Input;
 using BTF.Interaction;
 using BTF.Inventory;
@@ -45,6 +46,8 @@ namespace BTF.Game
         [SerializeField] private GameObject slimeBridge;
         [SerializeField] private GameObject bridgeBlocker;
         [SerializeField] private BridgeInteraction bridgeInteraction;
+        [SerializeField] private NPCQuestIcon weaponGiverIcon;
+        [SerializeField] private NPCQuestIcon villagerIcon;
 
         [Header("Interiors")]
         [SerializeField] private InteriorEntrance[] interiorEntrances;
@@ -61,6 +64,8 @@ namespace BTF.Game
         [SerializeField] private QuestUIView questUIView;
         [SerializeField] private DialogueUIView dialogueUIView;
         [SerializeField] private DiscoveryUIView discoveryUIView;
+        [SerializeField] private QuestHintController questHintController;
+        [SerializeField] private BerryGuideController berryGuideController;
 
         private PlayerController playerController;
         private InputService inputService;
@@ -86,6 +91,25 @@ namespace BTF.Game
             // ---------- QUEST ----------
             var questController = new QuestController();
             new QuestUIController(questController, questUIView);
+            questController.OnQuestChanged += quest =>
+            {
+                weaponGiverIcon.Hide();
+                villagerIcon.Hide();
+
+                if (quest == null)
+                    return;
+
+                switch (quest.Id)
+                {
+                    case QuestId.PrepareForSurvival:
+                        weaponGiverIcon.Show();
+                        break;
+
+                    case QuestId.HelpVillager:
+                        villagerIcon.Show();
+                        break;
+                }
+            };
 
             // ---------- DIALOGUE ----------
             var dialogueContext =
@@ -117,6 +141,12 @@ namespace BTF.Game
             var discoveryModel = new DiscoveryModel();
             var discoveryController =
                 new DiscoveryController(discoveryModel, discoveryUIView);
+
+            questHintController.Bind(discoveryController);
+            berryGuideController.Bind(
+                dialogueController,
+                dialogueRunner
+            );
 
             gameContext = new GameContext(
                 playerController,

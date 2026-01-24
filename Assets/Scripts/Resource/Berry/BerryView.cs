@@ -1,5 +1,6 @@
 ﻿using BTF.Discovery;
 using BTF.Game;
+using BTF.Guidance;
 using BTF.Interfaces;
 using System.Collections;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace BTF.Resource
         [SerializeField] private GameObject grownBerries;
         [SerializeField] private GameObject ungrownBerries;
         [SerializeField] private float regrowTime;
+        [SerializeField] private BerryGuideController berryGuideController;
 
         private BerryController controller;
         private GameContext context;
@@ -29,6 +31,7 @@ namespace BTF.Resource
                 controller.Collect();
             }
             context.Discovery.TryDiscover(DiscoverableItem.Berry);
+            berryGuideController?.OnBerryCollected();
         }
 
         private void OnCollect()

@@ -20,6 +20,7 @@ namespace BTF.UI.Quest
         [SerializeField] private Transform taskRoot;
         [SerializeField] private TMP_Text taskPrefab;
 
+        private QuestHintController hintController;
         private bool expanded;
 
         private void Awake()
@@ -55,6 +56,8 @@ namespace BTF.UI.Quest
 
         private void Toggle()
         {
+            hintController?.OnQuestOpened();
+
             if (expanded)
                 Collapse();
             else

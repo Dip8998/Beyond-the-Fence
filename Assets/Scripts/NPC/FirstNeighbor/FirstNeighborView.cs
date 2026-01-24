@@ -2,6 +2,7 @@
 using BTF.Discovery;
 using BTF.Game;
 using BTF.Interfaces;
+using BTF.NPC;
 using BTF.Player;
 using UnityEngine;
 
@@ -32,6 +33,7 @@ namespace BTF.FirstNB
                context.DialogueRunner.Run(dialogue),
                () =>
                {
+                   GetComponentInChildren<NPCQuestIcon>()?.Hide();
                    if (controller.GetState() == FirstNeighborState.Idle)
                    {
                        controller.OnPlayerInteract();
