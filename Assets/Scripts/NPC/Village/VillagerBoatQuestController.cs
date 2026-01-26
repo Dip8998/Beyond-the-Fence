@@ -17,6 +17,8 @@ namespace BTF.Villager
         private readonly BridgeController bridgeController;
         private readonly GameContext context;
 
+        public VillagerBoatQuestModel GetModel() => model;
+
         public VillagerBoatQuestController(
             VillagerBoatQuestModel model,
             InventoryController inventory,
@@ -62,14 +64,17 @@ namespace BTF.Villager
                 return;
             }
 
-            if (!bridgeController.IsBuilt)
+            if (!model.IsBridgeBuilt)
             {
-                if (inventory.HasWood(model.RequiredBridgeWood))
-                {
-                    inventory.ConsumeWood(model.RequiredBridgeWood);
-                    bridgeController.Build();
-                    context.Quest.CompleteTask(2); 
-                }
+                if (!inventory.HasWood(model.RequiredBridgeWood))
+                    return;
+
+                inventory.ConsumeWood(model.RequiredBridgeWood);
+                bridgeController.Build();
+                context.Discovery.Notify("Bridge to the island built!");
+                model.MarkBridgeBuilt();          
+                context.Quest.CompleteTask(2);
+
                 return;
             }
 

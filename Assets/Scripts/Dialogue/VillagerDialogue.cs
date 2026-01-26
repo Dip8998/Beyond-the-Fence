@@ -1,13 +1,40 @@
-﻿using System.Collections.Generic;
+﻿using BTF.Game;
 using BTF.Quest;
+using BTF.Villager;
+using System.Collections.Generic;
 
 namespace BTF.Dialogue
 {
     public sealed class VillagerDialogue : IDialogueResolver
     {
+        private readonly VillagerBoatQuestController villagerQuest;
+
+        public VillagerDialogue(VillagerBoatQuestController villagerQuest)
+        {
+            this.villagerQuest = villagerQuest;
+        }
+
         public IEnumerable<DialogueLine> Resolve(DialogueContext context)
         {
             var quest = context.Quest.CurrentQuest;
+
+            if (GameProgress.IsFenceUnlocked && quest == null)
+            {
+                yield return new DialogueLine(
+                    "Villager",
+                    "Hey there. Everything okay?"
+                );
+                yield break;
+            }
+
+            if (!GameProgress.IsFenceUnlocked && quest == null)
+            {
+                yield return new DialogueLine(
+                    "Villager",
+                    "Please… stay inside the fence. It’s not safe out there."
+                );
+                yield break;
+            }
 
             if (quest.Id != QuestId.HelpVillager)
             {
@@ -43,14 +70,28 @@ namespace BTF.Dialogue
                     break;
 
                 case "Build the bridge":
-                    yield return new DialogueLine(
-                        "Villager",
-                        "The slime land blocks the way."
-                    );
-                    yield return new DialogueLine(
-                        "Villager",
-                        "Cut 10 wooden sticks. We need a bridge."
-                    );
+                    if (villagerQuest.GetModel().IsBridgeBuilt)
+                    {
+                        yield return new DialogueLine(
+                            "Villager",
+                            "The bridge is ready."
+                        );
+                        yield return new DialogueLine(
+                            "Villager",
+                            "Go to the slime area and bring me the gear."
+                        );
+                    }
+                    else
+                    {
+                        yield return new DialogueLine(
+                            "Villager",
+                            "The slime land blocks the way."
+                        );
+                        yield return new DialogueLine(
+                            "Villager",
+                            "Cut 10 wooden sticks. We need a bridge."
+                        );
+                    }
                     break;
 
                 case "Find the gear":

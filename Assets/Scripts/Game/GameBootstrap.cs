@@ -66,6 +66,7 @@ namespace BTF.Game
         [SerializeField] private DiscoveryUIView discoveryUIView;
         [SerializeField] private QuestHintController questHintController;
         [SerializeField] private BerryGuideController berryGuideController;
+        [SerializeField] private UIUnlockController uiUnlockController;
 
         private PlayerController playerController;
         private InputService inputService;
@@ -73,6 +74,7 @@ namespace BTF.Game
         private InventoryController inventoryController;
         private InteriorSceneService interiorService;
         private GameContext gameContext;
+        private BerryController firstBerryController;
 
         private void Awake()
         {
@@ -180,7 +182,11 @@ namespace BTF.Game
             {
                 var berryController =
                     new BerryController(new BerryModel(), inventoryController);
+
                 berryView.Bind(berryController, gameContext);
+
+                if (firstBerryController == null)
+                    firstBerryController = berryController;
             }
 
             foreach (var enemyView in villageEnemies)
@@ -243,6 +249,11 @@ namespace BTF.Game
 
             bridgeInteraction.Bind(gameContext);
 
+            uiUnlockController.Bind(
+                inventoryController,
+                firstBerryController,
+                discoveryController
+            );
             // ---------- INTERIORS ----------
             foreach (var entrance in interiorEntrances)
             {

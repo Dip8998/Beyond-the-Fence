@@ -34,6 +34,7 @@ namespace BTF.Fence
         {
             Debug.Log("Fence unlocked!");
             GameProgress.IsFenceUnlocked = true;
+            gameContext.Discovery.Notify("Fence unlocked! Be careful — enemies ahead.");
             fenceCollider.enabled = false;
             fenceVisual.SetActive(false);
             gameContext.Quest.Advance();

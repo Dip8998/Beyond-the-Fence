@@ -37,8 +37,6 @@ namespace BTF.World
             if (IsBuilt)
                 return;
 
-            inventory.ConsumeWood(requiredWood);
-
             bridgeObject.SetActive(true);
             bridgeBlocker.SetActive(false);
 

@@ -19,7 +19,7 @@ namespace BTF.Villager
         {
             this.controller = controller;
             this.context = context;
-            dialogue = new VillagerDialogue();
+            dialogue = new VillagerDialogue(controller);
         }
 
         public void Interact()
@@ -32,6 +32,13 @@ namespace BTF.Villager
             if (controller.GetState() == VillagerBoatQuestState.Inactive)
                 return;
 
+            var task = context.Quest.CurrentQuest?.GetCurrentTask();
+
+            if (task != null && task.Text != "Talk to the villager")
+            {
+                controller.TryProgress(bossIslandPoint);
+            }
+
             context.DialogueController.StartDialogue(
                 context.DialogueRunner.Run(dialogue),
                 OnDialogueFinished
@@ -40,14 +47,12 @@ namespace BTF.Villager
 
         private void OnDialogueFinished()
         {
-            if (context.Quest.CurrentQuest.GetCurrentTask()?.Text == "Talk to the villager")
+            var task = context.Quest.CurrentQuest?.GetCurrentTask();
+
+            if (task != null && task.Text == "Talk to the villager")
             {
                 controller.OnFirstConversationFinished();
-                return;
             }
-
-            controller.TryProgress(bossIslandPoint);
         }
-
     }
 }

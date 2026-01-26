@@ -189,13 +189,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53385283}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1929229540}
-  m_Father: {fileID: 1199999023}
+  m_Father: {fileID: 625871575}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -310,6 +310,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 213767380}
   button: {fileID: 53385287}
+  unlockController: {fileID: 0}
+  isInventoryButton: 0
+  isQuestButton: 0
 --- !u!114 &53385289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2061,7 +2064,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "Fence unlocked! Be careful \u2014 enemies ahead."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2088,8 +2091,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2224,6 +2227,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &625871574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 625871575}
+  - component: {fileID: 625871576}
+  m_Layer: 5
+  m_Name: Buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &625871575
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625871574}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1127421044}
+  - {fileID: 2073022239}
+  - {fileID: 53385284}
+  m_Father: {fileID: 1199999023}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &625871576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625871574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6920afd2f413bc447b4634162e728eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  berryButton: {fileID: 2073022242}
+  inventoryButton: {fileID: 1127421047}
+  questButton: {fileID: 53385287}
+  inventoryGlow: {fileID: 1127421049}
+  questGlow: {fileID: 53385289}
+  questDelay: 5
 --- !u!1 &687439902
 GameObject:
   m_ObjectHideFlags: 0
@@ -25231,7 +25291,7 @@ Transform:
   m_GameObject: {fileID: 932570752}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.78, y: 6.0999994, z: 0}
+  m_LocalPosition: {x: 11.85, y: -0.19000006, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25826,6 +25886,7 @@ GameObject:
   - component: {fileID: 1127421045}
   - component: {fileID: 1127421047}
   - component: {fileID: 1127421048}
+  - component: {fileID: 1127421049}
   m_Layer: 5
   m_Name: InventoryButton
   m_TagString: Untagged
@@ -25846,7 +25907,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1828445403}
-  m_Father: {fileID: 1199999023}
+  m_Father: {fileID: 625871575}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -25934,7 +25995,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1127421045}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1127421049}
+        m_TargetAssemblyTypeName: BTF.UI.Quest.QuestButtonGlow, Assembly-CSharp
+        m_MethodName: StopGlow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1127421048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25949,6 +26022,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panel: {fileID: 303337957}
   button: {fileID: 1127421047}
+  unlockController: {fileID: 0}
+  isInventoryButton: 0
+  isQuestButton: 0
+--- !u!114 &1127421049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127421043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aed5027afd9d5f34b8ca33a60b7c288c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleAmount: 1.1
+  pulseSpeed: 3
+  glowColor: {r: 1, g: 0.9, b: 0.3, a: 1}
 --- !u!1001 &1184493539
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25967,11 +26058,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4279365072006357152, guid: e80fd7af24f3555469bab593c4a936cb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.53
+      value: 8.6
       objectReference: {fileID: 0}
     - target: {fileID: 4279365072006357152, guid: e80fd7af24f3555469bab593c4a936cb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.23
+      value: 4.94
       objectReference: {fileID: 0}
     - target: {fileID: 4279365072006357152, guid: e80fd7af24f3555469bab593c4a936cb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -26048,11 +26139,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4279365072006357152, guid: e80fd7af24f3555469bab593c4a936cb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.759999
+      value: 10.83
       objectReference: {fileID: 0}
     - target: {fileID: 4279365072006357152, guid: e80fd7af24f3555469bab593c4a936cb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.32
+      value: 5.03
       objectReference: {fileID: 0}
     - target: {fileID: 4279365072006357152, guid: e80fd7af24f3555469bab593c4a936cb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -26198,13 +26289,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1127421044}
-  - {fileID: 2073022239}
-  - {fileID: 53385284}
+  - {fileID: 625871575}
   - {fileID: 832372007}
+  - {fileID: 1267898052}
   - {fileID: 1952985396}
   - {fileID: 1779044599}
-  - {fileID: 1267898052}
   - {fileID: 1760076005}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -26309,6 +26398,7 @@ MonoBehaviour:
   discoveryUIView: {fileID: 1760076006}
   questHintController: {fileID: 1952985398}
   berryGuideController: {fileID: 932570755}
+  uiUnlockController: {fileID: 625871576}
 --- !u!4 &1208702248 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2464982085592280595, guid: c072b90e26bf5334d9bba93215a85d52, type: 3}
@@ -26570,7 +26660,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1267898051}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -27685,7 +27775,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -200}
-  m_SizeDelta: {x: 800, y: 100}
+  m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1760076006
 MonoBehaviour:
@@ -28458,7 +28548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a784b98265272b4f932ccc2592c5953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 10
+  delay: 5
   questButtonGlow: {fileID: 53385289}
 --- !u!1001 &1962425206
 PrefabInstance:
@@ -29208,7 +29298,7 @@ RectTransform:
   m_Children:
   - {fileID: 687439903}
   - {fileID: 360821432}
-  m_Father: {fileID: 1199999023}
+  m_Father: {fileID: 625871575}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
