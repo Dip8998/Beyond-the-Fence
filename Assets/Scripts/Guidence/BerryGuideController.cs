@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using BTF.Inventory;
 using BTF.Tutorial;
 using BTF.Dialogue;
+using UnityEngine;
 
 namespace BTF.Guidance
 {
@@ -11,39 +12,57 @@ namespace BTF.Guidance
 
         private DialogueController dialogueController;
         private DialogueRunner dialogueRunner;
+        private InventoryController inventory;
 
         private bool completed;
 
         public void Bind(
             DialogueController dialogueController,
-            DialogueRunner dialogueRunner)
+            DialogueRunner dialogueRunner,
+            InventoryController inventory)
         {
             this.dialogueController = dialogueController;
             this.dialogueRunner = dialogueRunner;
+            this.inventory = inventory;
 
-            if (TutorialFlags.FoodTutorialShown)
+            if (TutorialFlags.FoodTutorialShown || inventory.HasBerry(1))
             {
-                arrow.Hide();
-                completed = true;
+                Complete();
                 return;
             }
 
             arrow.gameObject.SetActive(true);
             arrow.SetTarget(berryTarget);
+
+            inventory.OnBerryAdded += OnBerryAdded;
         }
 
-        public void OnBerryCollected()
+        private void OnBerryAdded(int totalBerries)
         {
             if (completed) return;
 
+            Complete();
+
+            dialogueController.StartDialogue(
+                dialogueRunner.Run(new FoodTutorialDialogue())
+            );
+        }
+
+        private void Complete()
+        {
             completed = true;
             TutorialFlags.FoodTutorialShown = true;
 
             arrow.Hide();
 
-            dialogueController.StartDialogue(
-                dialogueRunner.Run(new FoodTutorialDialogue())
-            );
+            if (inventory != null)
+                inventory.OnBerryAdded -= OnBerryAdded;
+        }
+
+        private void OnDestroy()
+        {
+            if (inventory != null)
+                inventory.OnBerryAdded -= OnBerryAdded;
         }
     }
 }

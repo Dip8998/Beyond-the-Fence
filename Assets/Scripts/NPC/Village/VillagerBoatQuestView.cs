@@ -29,9 +29,6 @@ namespace BTF.Villager
 
             controller.TryActivate();
 
-            if (controller.GetState() == VillagerBoatQuestState.Inactive)
-                return;
-
             var task = context.Quest.CurrentQuest?.GetCurrentTask();
 
             if (task != null && task.Text != "Talk to the villager")

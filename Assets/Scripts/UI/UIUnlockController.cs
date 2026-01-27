@@ -4,6 +4,7 @@ using BTF.Inventory;
 using BTF.Resource;
 using BTF.Discovery;
 using BTF.UI.Quest;
+using System.Collections;
 
 namespace BTF.UI
 {
@@ -20,7 +21,10 @@ namespace BTF.UI
 
         [Header("Quest Delay")]
         [SerializeField] private float questDelay = 10f;
+        [SerializeField] private float glowTimeout = 20f;
 
+        private Coroutine inventoryGlowRoutine;
+        private Coroutine questGlowRoutine;
         private InventoryController inventory;
         private BerryController berryController;
         private DiscoveryController discovery;
@@ -56,13 +60,19 @@ namespace BTF.UI
 
             if (!inventoryUnlocked &&
                 (inventory.GetWoodCount() > 0 ||
-                 inventory.GetGearCount() > 0))
+                inventory.GetGearCount() > 0))
             {
                 inventoryUnlocked = true;
                 inventoryButton.gameObject.SetActive(true);
 
                 inventoryGlow.StartGlow();
                 discovery.Notify("Check inventory");
+
+                inventoryGlowRoutine =
+                StartCoroutine(StopGlowAfterTime(
+                inventoryGlow,
+                () => inventoryGlowRoutine = null
+                ));
             }
         }
 
@@ -75,6 +85,12 @@ namespace BTF.UI
 
             questGlow.StartGlow();
             discovery.Notify("Check your quest list");
+
+            questGlowRoutine =
+                StartCoroutine(StopGlowAfterTime(
+                    questGlow,
+                    () => questGlowRoutine = null
+                ));
         }
 
         public void OnInventoryOpened()
@@ -85,6 +101,16 @@ namespace BTF.UI
         public void OnQuestOpened()
         {
             questGlow.StopGlow();
+        }
+
+        private IEnumerator StopGlowAfterTime(
+            QuestButtonGlow glow,
+            System.Action onFinished)
+        {
+            yield return new WaitForSeconds(glowTimeout);
+
+            glow.StopGlow();
+            onFinished?.Invoke();
         }
 
         private void OnDestroy()

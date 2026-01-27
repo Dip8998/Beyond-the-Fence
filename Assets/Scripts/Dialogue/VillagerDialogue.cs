@@ -18,20 +18,20 @@ namespace BTF.Dialogue
         {
             var quest = context.Quest.CurrentQuest;
 
-            if (GameProgress.IsFenceUnlocked && quest == null)
+            if (!GameProgress.IsFenceUnlocked && quest.Id != QuestId.HelpVillager)
             {
                 yield return new DialogueLine(
-                    "Villager",
-                    "Hey there. Everything okay?"
+                "Villager",
+                "Please… stay inside the fence. It’s not safe out there."
                 );
                 yield break;
             }
 
-            if (!GameProgress.IsFenceUnlocked && quest == null)
+            if (GameProgress.IsFenceUnlocked && quest.Id != QuestId.HelpVillager)
             {
                 yield return new DialogueLine(
-                    "Villager",
-                    "Please… stay inside the fence. It’s not safe out there."
+                "Villager",
+                "Hey there. Everything okay?"
                 );
                 yield break;
             }

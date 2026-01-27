@@ -147,7 +147,8 @@ namespace BTF.Game
             questHintController.Bind(discoveryController);
             berryGuideController.Bind(
                 dialogueController,
-                dialogueRunner
+                dialogueRunner,
+                inventoryController
             );
 
             gameContext = new GameContext(

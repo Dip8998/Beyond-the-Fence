@@ -31,7 +31,6 @@ namespace BTF.Resource
                 controller.Collect();
             }
             context.Discovery.TryDiscover(DiscoverableItem.Berry);
-            berryGuideController?.OnBerryCollected();
         }
 
         private void OnCollect()

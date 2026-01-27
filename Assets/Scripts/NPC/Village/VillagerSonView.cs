@@ -1,13 +1,29 @@
-﻿using BTF.Interfaces;
+﻿using BTF.Dialogue;
+using BTF.Game;
+using BTF.Interfaces;
 using UnityEngine;
 
 namespace BTF.Villager
 {
-    public class VillagerSonView : MonoBehaviour, IInteractable
+    public sealed class VillagerSonView : MonoBehaviour, IInteractable
     {
+        private GameContext context;
+        private VillagerSonDialogue dialogue;
+
+        public void Bind(GameContext context)
+        {
+            this.context = context;
+            dialogue = new VillagerSonDialogue();
+        }
+
         public void Interact()
         {
-            Debug.Log("Thankyou for saving me!");
+            if (context.DialogueController.IsPlaying)
+                return;
+
+            context.DialogueController.StartDialogue(
+                context.DialogueRunner.Run(dialogue)
+            );
         }
     }
 }

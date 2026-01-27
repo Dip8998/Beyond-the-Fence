@@ -1,6 +1,7 @@
 ﻿using BTF.Game;
 using BTF.Quest;
 using System;
+using System.Threading;
 
 namespace BTF.Inventory
 {
@@ -9,6 +10,7 @@ namespace BTF.Inventory
         private readonly InventoryModel model;
         private QuestController questController;
         public event Action OnInventoryChanged;
+        public event Action<int> OnBerryAdded;
 
         public InventoryController(InventoryModel model, QuestController questController)
         {
@@ -50,6 +52,7 @@ namespace BTF.Inventory
         {
             if (count <= 0) return;
             model.AddBerry(count);
+            OnBerryAdded?.Invoke(count);
             Notify();               
             Log();
         }
