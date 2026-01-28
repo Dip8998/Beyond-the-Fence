@@ -92,15 +92,17 @@ namespace BTF.Quest
             OnQuestChanged?.Invoke(CurrentQuest);
         }
 
-        private void SetQuest(QuestId id)
+        public void SetQuest(QuestId id)
         {
             if (!quests.TryGetValue(id, out var quest))
-            {
-                CurrentQuest = null;
                 return;
-            }
 
             CurrentQuest = quest;
+            OnQuestChanged?.Invoke(CurrentQuest);
+        }
+
+        public void NotifyQuestChanged()
+        {
             OnQuestChanged?.Invoke(CurrentQuest);
         }
     }

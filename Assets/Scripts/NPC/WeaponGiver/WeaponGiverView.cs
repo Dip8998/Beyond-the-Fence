@@ -38,10 +38,11 @@ namespace BTF.NPC
                     if (!GameProgress.IsFenceUnlocked)
                         return;
 
-                    if (!controller.HasGivenWeapon)
+                    if (!player.HasWeapon)
+                    {
                         controller.GiveWeapon(player, context);
-
-                    context.Discovery.TryDiscover(DiscoverableItem.Sword);
+                        context.Discovery.TryDiscover(DiscoverableItem.Sword);
+                    }
                 }
             );
         }

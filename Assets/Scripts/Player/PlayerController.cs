@@ -22,6 +22,8 @@ namespace BTF.Player
 
         public event Action OnHealthChanged;
 
+        public bool HasWeapon => model.HasWeapon;
+
         public PlayerController(PlayerModel model, InputService inputService)
         {
             this.model = model;

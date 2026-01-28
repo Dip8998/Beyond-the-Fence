@@ -16,12 +16,15 @@ using BTF.Quest;
 using BTF.Resource;
 using BTF.Scenes;
 using BTF.SeconNB;
+using BTF.Tutorial;
 using BTF.UI;
 using BTF.UI.Health;
 using BTF.UI.Inventory;
 using BTF.UI.Quest;
 using BTF.Villager;
 using BTF.World;
+using NUnit.Framework.Internal;
+using System.Collections;
 using UnityEngine;
 
 namespace BTF.Game
@@ -67,6 +70,7 @@ namespace BTF.Game
         [SerializeField] private QuestHintController questHintController;
         [SerializeField] private BerryGuideController berryGuideController;
         [SerializeField] private UIUnlockController uiUnlockController;
+        [SerializeField] private TestResetGame testResetGame;
 
         private PlayerController playerController;
         private InputService inputService;
@@ -93,25 +97,7 @@ namespace BTF.Game
             // ---------- QUEST ----------
             var questController = new QuestController();
             new QuestUIController(questController, questUIView);
-            questController.OnQuestChanged += quest =>
-            {
-                weaponGiverIcon.Hide();
-                villagerIcon.Hide();
-
-                if (quest == null)
-                    return;
-
-                switch (quest.Id)
-                {
-                    case QuestId.PrepareForSurvival:
-                        weaponGiverIcon.Show();
-                        break;
-
-                    case QuestId.HelpVillager:
-                        villagerIcon.Show();
-                        break;
-                }
-            };
+            questController.OnQuestChanged += RefreshNpcQuestIcons;
 
             // ---------- DIALOGUE ----------
             var dialogueContext =
@@ -145,11 +131,6 @@ namespace BTF.Game
                 new DiscoveryController(discoveryModel, discoveryUIView);
 
             questHintController.Bind(discoveryController);
-            berryGuideController.Bind(
-                dialogueController,
-                dialogueRunner,
-                inventoryController
-            );
 
             gameContext = new GameContext(
                 playerController,
@@ -166,6 +147,22 @@ namespace BTF.Game
 
             interiorService.SetContext(gameContext);
 
+            GetComponent<AutoSaveHook>()?.Bind(gameContext, uiUnlockController);
+
+            bool isLoadGame = SaveManager.HasSave();
+
+            if (!isLoadGame)
+            {
+                TutorialFlags.FoodTutorialShown = false;
+                inventoryController.ResetInventory();
+            }
+
+            if (isLoadGame)
+            {
+                SaveSystemService.LoadGame(gameContext, uiUnlockController);
+                fenceView.RestoreFromSave();
+                RefreshNpcQuestIcons(gameContext.Quest.CurrentQuest);
+            }
 
             // ---------- INTERACTION ----------
             interactionSystem = new InteractionSystem(gameContext);
@@ -255,6 +252,19 @@ namespace BTF.Game
                 firstBerryController,
                 discoveryController
             );
+
+
+            berryGuideController.Bind(
+                dialogueController,
+                dialogueRunner,
+                inventoryController
+            );
+
+            if (testResetGame != null)
+            {
+                testResetGame.Bind(inputService, gameContext);
+            }
+
             // ---------- INTERIORS ----------
             foreach (var entrance in interiorEntrances)
             {
@@ -285,6 +295,34 @@ namespace BTF.Game
         {
             worldRoot.SetActive(true);
             interiorService.OnExitInterior -= OnFirstInteriorExit;
+
+            StartCoroutine(RefreshIconsNextFrame());
+        }
+
+        private IEnumerator RefreshIconsNextFrame()
+        {
+            yield return null;
+            RefreshNpcQuestIcons(gameContext.Quest.CurrentQuest);
+        }
+
+        private void RefreshNpcQuestIcons(QuestModel quest)
+        {
+            weaponGiverIcon.Hide();
+            villagerIcon.Hide();
+
+            if (quest == null)
+                return;
+
+            if (quest.Id == QuestId.PrepareForSurvival &&
+                weaponGiverIcon.gameObject.activeInHierarchy)
+            {
+                weaponGiverIcon.Show();
+            }
+
+            if (quest.Id == QuestId.HelpVillager)
+            {
+                villagerIcon.Show();
+            }
         }
     }
 }

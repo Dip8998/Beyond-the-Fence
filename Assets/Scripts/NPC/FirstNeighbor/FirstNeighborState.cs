@@ -5,6 +5,7 @@ namespace BTF.FirstNB
         Idle,
         AskedForHelp,
         JewelryBoxFound,
-        ConflictResolved
+        ConflictResolved,
+        KeyGiven
     }
 }

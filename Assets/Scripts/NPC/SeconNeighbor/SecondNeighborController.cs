@@ -11,6 +11,11 @@
 
         public SecondNeighborState GetState() => model.State;
 
+        public void SetState(SecondNeighborState state)
+        {
+            model.State = state;
+        }
+
         public void OnPlayerInteract(bool firstNeighborAsked)
         {
             if (!firstNeighborAsked) return;

@@ -11,7 +11,7 @@ namespace BTF.Inventory
         private QuestController questController;
         public event Action OnInventoryChanged;
         public event Action<int> OnBerryAdded;
-
+        public bool IsLoading { get; set; }
         public InventoryController(InventoryModel model, QuestController questController)
         {
             this.model = model;
@@ -52,7 +52,8 @@ namespace BTF.Inventory
         {
             if (count <= 0) return;
             model.AddBerry(count);
-            OnBerryAdded?.Invoke(count);
+            if (!IsLoading)
+                OnBerryAdded?.Invoke(count);
             Notify();               
             Log();
         }
@@ -84,6 +85,12 @@ namespace BTF.Inventory
             Notify();
             Log();
             return true;
+        }
+
+        public void ResetInventory()
+        {
+            model.Clear(); 
+            Notify();
         }
 
         private void Notify() => OnInventoryChanged?.Invoke();

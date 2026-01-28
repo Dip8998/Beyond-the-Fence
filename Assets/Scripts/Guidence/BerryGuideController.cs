@@ -25,9 +25,11 @@ namespace BTF.Guidance
             this.dialogueRunner = dialogueRunner;
             this.inventory = inventory;
 
-            if (TutorialFlags.FoodTutorialShown || inventory.HasBerry(1))
+            completed = TutorialFlags.FoodTutorialShown;
+
+            if (completed || inventory.HasBerry(1))
             {
-                Complete();
+                arrow.Hide();
                 return;
             }
 
@@ -39,24 +41,34 @@ namespace BTF.Guidance
 
         private void OnBerryAdded(int totalBerries)
         {
-            if (completed) return;
+            if (completed)
+                return;
 
-            Complete();
+            completed = true;
+            TutorialFlags.FoodTutorialShown = true;
+
+            arrow.Hide();
+
+            inventory.OnBerryAdded -= OnBerryAdded;
 
             dialogueController.StartDialogue(
                 dialogueRunner.Run(new FoodTutorialDialogue())
             );
         }
 
-        private void Complete()
+        public void ResetForNewGame()
         {
-            completed = true;
-            TutorialFlags.FoodTutorialShown = true;
+            completed = false;
+            TutorialFlags.FoodTutorialShown = false;
 
-            arrow.Hide();
+            arrow.gameObject.SetActive(true);
+            arrow.SetTarget(berryTarget);
 
             if (inventory != null)
+            {
                 inventory.OnBerryAdded -= OnBerryAdded;
+                inventory.OnBerryAdded += OnBerryAdded;
+            }
         }
 
         private void OnDestroy()

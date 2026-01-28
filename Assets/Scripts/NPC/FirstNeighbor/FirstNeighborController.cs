@@ -21,6 +21,11 @@ namespace BTF.FirstNB
             }
         }
 
+        public void SetState(FirstNeighborState state)
+        {
+            model.State = state;
+        }
+
         public void ResolveConflict()
         {
             model?.ResolveConflict();
@@ -28,10 +33,17 @@ namespace BTF.FirstNB
 
         public void GiveKey(PlayerController player)
         {
+            if (model.State == FirstNeighborState.KeyGiven)
+                return;
+
+            if (player.HasFenceKey())
+                return;
+
             if (model.State != FirstNeighborState.ConflictResolved)
                 return;
 
             player.ReceiveFenceKey();
+            model.State = FirstNeighborState.KeyGiven;
         }
     }
 }

@@ -32,22 +32,68 @@ namespace BTF.UI
         private bool berryUnlocked;
         private bool inventoryUnlocked;
         private bool questUnlocked;
+        private bool hasLoadedFromSave;
+
+        public bool IsBerryUnlocked => berryUnlocked;
+        public bool IsInventoryUnlocked => inventoryUnlocked;
+        public bool IsQuestUnlocked => questUnlocked;
+
+        public void SetUnlockedState(
+            bool berry,
+            bool inventory,
+            bool quest)
+        {
+            hasLoadedFromSave = true;
+
+            berryUnlocked = berry;
+            inventoryUnlocked = inventory;
+            questUnlocked = quest;
+
+            RefreshUIState();
+        }
+
+        public void RefreshUIState()
+        {
+            berryButton.gameObject.SetActive(
+            berryUnlocked
+            );
+
+
+            inventoryButton.gameObject.SetActive(
+            inventoryUnlocked
+            );
+
+
+            questButton.gameObject.SetActive(
+            questUnlocked
+            );
+
+
+            inventoryGlow.StopGlow();
+            questGlow.StopGlow();
+        }
 
         public void Bind(
             InventoryController inventory,
-            BerryController berryController, 
+            BerryController berryController,
             DiscoveryController discovery)
         {
             this.inventory = inventory;
             this.discovery = discovery;
 
-            berryButton.gameObject.SetActive(false);
-            inventoryButton.gameObject.SetActive(false);
-            questButton.gameObject.SetActive(false);
+            if (!hasLoadedFromSave)
+            {
+                berryButton.gameObject.SetActive(false);
+                inventoryButton.gameObject.SetActive(false);
+                questButton.gameObject.SetActive(false);
+            }
 
             inventory.OnInventoryChanged += OnInventoryChanged;
 
-            Invoke(nameof(UnlockQuest), questDelay);
+            if (!hasLoadedFromSave)
+            {
+                Invoke(nameof(UnlockQuest), questDelay);
+            }
         }
 
         private void OnInventoryChanged()
@@ -117,6 +163,22 @@ namespace BTF.UI
         {
             if (inventory != null)
                 inventory.OnInventoryChanged -= OnInventoryChanged;
+        }
+
+        public void ResetForNewGame()
+        {
+            hasLoadedFromSave = false;
+
+            berryUnlocked = false;
+            inventoryUnlocked = false;
+            questUnlocked = false;
+
+            berryButton.gameObject.SetActive(false);
+            inventoryButton.gameObject.SetActive(false);
+            questButton.gameObject.SetActive(false);
+
+            CancelInvoke();
+            Invoke(nameof(UnlockQuest), questDelay);
         }
     }
 }

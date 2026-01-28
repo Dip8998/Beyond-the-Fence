@@ -5,16 +5,13 @@ namespace BTF.NPC
 {
     public class WeaponGiverController
     {
-        private bool weaponGiven;
-
-        public bool HasGivenWeapon => weaponGiven;
-
         public void GiveWeapon(PlayerController player, GameContext context)
         {
-            if (weaponGiven) return;
+            if (player.HasWeapon)
+                return;
 
             player.ReceiveWeapon();
-            weaponGiven = true;
+
             context.Quest.Advance();
         }
     }

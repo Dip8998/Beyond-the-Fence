@@ -1,4 +1,5 @@
-﻿using BTF.Game;
+﻿using BTF.FirstNB;
+using BTF.Game;
 using BTF.Interfaces;
 using BTF.Player;
 using UnityEngine;
@@ -21,6 +22,13 @@ namespace BTF.Fence
 
         public void Interact()
         {
+            if (GameProgress.IsFenceUnlocked)
+                return;
+
+            gameContext.FirstNeighbor.SetState(
+                FirstNeighborState.KeyGiven
+                );
+
             if (!player.HasFenceKey())
             {
                 gameContext.Discovery.Notify("The fence is locked");
@@ -38,6 +46,20 @@ namespace BTF.Fence
             fenceCollider.enabled = false;
             fenceVisual.SetActive(false);
             gameContext.Quest.Advance();
+        }
+
+        public void RestoreFromSave()
+        {
+            if (GameProgress.IsFenceUnlocked)
+            {
+                fenceCollider.enabled = false;
+                fenceVisual.SetActive(false);
+            }
+            else
+            {
+                fenceCollider.enabled = true;
+                fenceVisual.SetActive(true);
+            }
         }
     }
 }

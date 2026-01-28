@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BTF.FirstNB;
+using BTF.Game;
 using BTF.Quest;
 
 namespace BTF.Dialogue
@@ -31,6 +32,28 @@ namespace BTF.Dialogue
                     "Neighbor",
                     "Unlock the fence and be careful out there."
                 );
+
+                yield break;
+            }
+
+            if (firstNeighbor.GetState() == FirstNeighborState.KeyGiven && !GameProgress.IsFenceUnlocked)
+            {
+                yield return new DialogueLine(
+                "Neighbor",
+                "Unlock the fence you already have the key."
+                );
+
+
+                yield break;
+            }
+
+            if (firstNeighbor.GetState() == FirstNeighborState.KeyGiven && GameProgress.IsFenceUnlocked)
+            {
+                yield return new DialogueLine(
+                "Neighbor",
+                "The fence is already unlocked. Be careful out there."
+                );
+
 
                 yield break;
             }

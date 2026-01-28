@@ -27,5 +27,12 @@ namespace BTF.Inventory
 
         public void ConsumeWood(int c) => WoodCount -= c;
         public void ConsumeGear(int c) => GearCount -= c;
+
+        public void Clear()
+        {
+            WoodCount = 0;
+            BerryCount = 0;
+            GearCount = 0;
+        }
     }
 }
